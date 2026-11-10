@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BCT Design System</title>
+<link rel="icon" type="image/svg+xml" href="logo/bct_mark_color.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'GSans';font-weight:400;src:local('Google Sans Regular'),local('GoogleSans-Regular');}
+@font-face{font-family:'GSans';font-weight:500;src:local('Google Sans Medium'),local('GoogleSans-Medium');}
+@font-face{font-family:'GSans';font-weight:600;src:local('Google Sans Medium'),local('GoogleSans-Medium');}
+@font-face{font-family:'GSans';font-weight:700;src:local('Google Sans Bold'),local('GoogleSans-Bold');}
+:root{
+  --primary:#1F4E9C; --primary-deep:#153B78; --primary-deeper:#0F2C5C; --primary-pale:#EAF1FC; --primary-pale-2:#F4F8FE; --on-primary:#FFFFFF;
+  --canvas:#FFFFFF; --surface:#F6F9FD; --ink:#0B1220; --steel:#5B6472; --steel-soft:#8A93A3; --hairline:#E2E8F3; --hairline-strong:#CBD8ED;
+  --amber:#C98A2B; --amber-pale:#FBE8D3; --good:#1F8A5F; --good-pale:#E4F3EA; --risk:#C1443C; --risk-pale:#FBE7E5;
+  --font:'GSans','Google Sans','Segoe UI','Helvetica Neue',Arial,'Gowun Batang',serif;
+  --r-sm:9px; --r-md:14px; --r-lg:18px; --r-pill:999px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--canvas);color:var(--ink);font:400 16px/1.65 var(--font);-webkit-font-smoothing:antialiased}
+code{font-family:var(--font);font-size:.86em;background:var(--primary-pale);color:var(--primary-deep);padding:1px 7px;border-radius:6px}
+h1,h2,h3{margin:0;color:var(--ink)}
+h2{font:700 32px/1.25 var(--font);margin:6px 0 12px}
+h3{font:700 18px/1.35 var(--font);margin:40px 0 14px}
+.eb{font:700 13px/1.2 var(--font);letter-spacing:.12em;text-transform:uppercase;color:var(--steel)}
+.eb b{color:var(--primary)}
+.lead{color:var(--steel);max-width:760px;margin:0 0 24px}
+
+.shell{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1360px;margin:0 auto}
+nav.side{position:sticky;top:0;align-self:start;height:100vh;padding:32px 16px 32px 28px;overflow:auto}
+nav.side .mark{display:block;width:96px;margin-bottom:28px}
+nav.side .mark svg{width:100%;height:auto;display:block}
+nav.side a{display:block;text-decoration:none;color:var(--steel);font:500 14px/1.3 var(--font);padding:8px 12px;border-radius:var(--r-pill)}
+nav.side a:hover,nav.side a.on{background:var(--primary-pale);color:var(--primary-deep)}
+main{padding:0 48px 96px;min-width:0}
+section{padding-top:72px}
+
+/* window motif (two squares) for slide mocks / demo */
+.blob{position:absolute;border-radius:50%;pointer-events:none}
+.win{position:absolute;pointer-events:none;border:2px solid rgba(255,255,255,.26)}
+
+/* ===== cover (cm_pricing deck style) ===== */
+.cover{background:var(--primary-deep);color:#fff;margin:0 -48px;position:relative;overflow:hidden;border-radius:0 0 var(--r-lg) var(--r-lg);min-height:640px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:32px;padding:44px 56px 0}
+.cover .blob{position:absolute;border-radius:50%;pointer-events:none}
+.cover .cb1{width:420px;height:420px;right:-110px;top:-150px;background:#2E5FAE;opacity:.55}
+.cover .cb2{width:340px;height:340px;left:-120px;bottom:-120px;background:#0F2C5C;opacity:.35}
+.cv-left{position:relative;display:flex;flex-direction:column;min-height:560px}
+.cv-logo{width:118px}.cv-logo svg{width:100%;height:auto;display:block}
+.cv-k{margin-top:64px;font:700 13.5px/1.2 var(--font);letter-spacing:.14em;color:var(--amber)}
+.cover h1{font:700 40px/1.3 var(--font);color:#fff;letter-spacing:-.01em;margin:14px 0 18px}
+.cover h1 .am{color:var(--amber)}
+.cv-sub{font-size:17px;line-height:1.6;color:#C7D5EC;margin:0;max-width:600px}
+.cv-q{display:flex;align-items:center;gap:14px;margin-top:28px;color:#9AAAC6;font:italic 400 15px/1.4 var(--font)}
+.cv-q::before{content:"";width:4px;height:22px;background:var(--amber);flex:none}
+.cv-by{margin-top:auto;padding:28px 0 64px}
+.cv-by .s{font:500 12px/1 var(--font);letter-spacing:.12em;color:#9FB3D6}
+.cv-by .n{font:700 15px/1.3 var(--font);color:#fff;margin-top:8px}
+.cv-right{position:relative;padding-top:8px}
+.cv-right svg{width:100%;height:auto;display:block;overflow:visible}
+.cv-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+.cv-stats div{border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:12px 14px}
+.cv-stats b{display:block;font:700 24px/1.1 var(--font);color:#fff}
+.cv-stats b small{font-size:14px;margin-left:3px;color:#AFC3E6;font-weight:700}
+.cv-stats span{display:block;font-size:12.5px;color:#AFC3E6;margin-top:4px}
+.cv-foot{position:absolute;left:0;right:0;bottom:0;height:34px;border-top:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:space-between;padding:0 56px;font:500 12px/1 var(--font);letter-spacing:.04em;color:#C7D5EC}
+.cv-foot .fm{display:flex;align-items:center;gap:9px;color:#fff;font:700 12.5px/1 var(--font);letter-spacing:.02em}
+.cv-foot .fm svg{width:12px;height:12px;display:block}
+.cv-foot .pg{font-weight:700;color:#fff;font-size:12px}
+/* motion: a slide assembles inside the two-square window */
+.wa .w{fill:none;stroke-width:1.2;stroke-dasharray:1500;stroke-dashoffset:1500;animation:winDraw 1.6s ease forwards}
+.wa .w1{stroke:rgba(255,255,255,.26);animation-delay:.1s}
+.wa .w2{stroke:rgba(255,255,255,.55);animation:winDraw 1.6s ease .4s forwards, lockFlash 7s ease 2s infinite}
+.wa .wl{font:700 12px/1 'GSans','Google Sans',sans-serif;letter-spacing:.12em;fill:#9FB3D6}
+.wa .sf{fill:#fff;opacity:0;animation:fadeLoop 7s ease 1.6s infinite}
+.wa .guide{stroke:#8FB4F0;stroke-width:1;stroke-dasharray:3 3;opacity:0;animation:guide 7s ease 1.6s infinite}
+.wa .bar{transform-box:fill-box;transform-origin:left center;transform:scaleX(0);animation:grow 7s ease 1.6s infinite}
+.wa .eb{fill:#1F4E9C;animation-name:grow1}
+.wa .tt{fill:#0B1220;animation-name:grow2}
+.wa .sb{fill:#8A93A3;animation-name:grow3}
+.wa .cd{fill:#F6F9FD;stroke:#E2E8F3;opacity:0;animation:card 7s ease 1.6s infinite}
+.wa .cd2{animation-name:card2}.wa .cd3{animation-name:card3}
+.wa .ft{fill:#153B78;transform-box:fill-box;transform-origin:left center;transform:scaleX(0);animation:foot 7s ease 1.6s infinite}
+.wa .fmk{opacity:0;animation:fmk 7s ease 1.6s infinite}
+.wa .hl{fill:#C98A2B;opacity:0;animation:hl 7s ease 1.6s infinite}
+.wa .ring{fill:none;stroke:#C98A2B;stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:center;animation:ring 7s ease-out 1.6s infinite}
+.wa .tk{opacity:0;transform-box:fill-box;transform-origin:center;animation:tok 7s ease 1.6s infinite}
+.wa .tk1{animation-name:tok1}.wa .tk2{animation-name:tok2}.wa .tk3{animation-name:tok3}.wa .tk4{animation-name:tok4}
+.wa .ok{font:700 11px/1 'GSans','Google Sans',sans-serif;letter-spacing:.08em;fill:#C98A2B;opacity:0;animation:ok 7s ease 1.6s infinite}
+@keyframes winDraw{to{stroke-dashoffset:0}}
+@keyframes lockFlash{0%,62%{stroke:rgba(255,255,255,.55)}68%,88%{stroke:#C98A2B}100%{stroke:rgba(255,255,255,.55)}}
+@keyframes fadeLoop{0%{opacity:0}4%,90%{opacity:1}98%,100%{opacity:0}}
+@keyframes guide{0%,4%{opacity:0}8%,40%{opacity:.9}48%,100%{opacity:0}}
+@keyframes grow1{0%,10%{transform:scaleX(0)}16%,90%{transform:scaleX(1)}98%,100%{transform:scaleX(1);opacity:0}}
+@keyframes grow2{0%,15%{transform:scaleX(0)}23%,90%{transform:scaleX(1)}98%,100%{transform:scaleX(1);opacity:0}}
+@keyframes grow3{0%,21%{transform:scaleX(0)}27%,90%{transform:scaleX(1)}98%,100%{transform:scaleX(1);opacity:0}}
+@keyframes card{0%,28%{opacity:0;transform:translateY(8px)}33%,90%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes card2{0%,33%{opacity:0;transform:translateY(8px)}38%,90%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes card3{0%,38%{opacity:0;transform:translateY(8px)}43%,90%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes foot{0%,44%{transform:scaleX(0)}52%,90%{transform:scaleX(1)}98%,100%{transform:scaleX(1);opacity:0}}
+@keyframes fmk{0%,50%{opacity:0}54%,90%{opacity:1}98%,100%{opacity:0}}
+@keyframes hl{0%,56%{opacity:0}60%,90%{opacity:1}98%,100%{opacity:0}}
+@keyframes ring{0%,57%{opacity:0;transform:scale(.4)}60%{opacity:1}80%,100%{opacity:0;transform:scale(4)}}
+@keyframes tok1{0%,62%{opacity:0;transform:scale(.3)}66%,90%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes tok2{0%,65%{opacity:0;transform:scale(.3)}69%,90%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes tok3{0%,68%{opacity:0;transform:scale(.3)}72%,90%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes tok4{0%,71%{opacity:0;transform:scale(.3)}75%,90%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes ok{0%,76%{opacity:0}80%,90%{opacity:1}98%,100%{opacity:0}}
+@media (max-width:1023px){.cover{grid-template-columns:1fr;margin:0 -24px;padding:36px 32px 0}.cv-right{max-width:460px}.cv-foot{padding:0 32px}.cv-k{margin-top:40px}}
+@media (max-width:767px){.cover{margin:0 -16px;padding:28px 20px 0}.cover h1{font-size:30px}.cv-sub{font-size:15.5px}.cv-foot .doc{display:none}.cv-foot{padding:0 20px}}
+@media (prefers-reduced-motion:reduce){.wa *{animation:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important}.wa .ring,.wa .guide{opacity:0!important}}
+
+.tabs{display:inline-flex;background:var(--primary-pale);border-radius:var(--r-pill);padding:4px;margin-top:28px}
+.tabs button{font:500 14px/1 var(--font);border:0;background:transparent;color:var(--primary-deep);padding:11px 20px;border-radius:var(--r-pill);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--primary-deep);color:#fff}
+#source{display:none;margin-top:28px}
+#source pre{background:var(--primary-deeper);color:#D5DFEF;font:400 12.5px/1.6 ui-monospace,Consolas,monospace;padding:24px;border-radius:var(--r-md);overflow:auto;max-height:80vh;white-space:pre}
+body.show-source #live{display:none} body.show-source #source{display:block}
+
+.chars{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.chars li{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);padding:16px 18px;font-size:15px}
+
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.sw{background:var(--canvas);border:1px solid var(--hairline);border-radius:var(--r-md);overflow:hidden;cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit}
+.sw .swc{height:72px;border-bottom:1px solid var(--hairline)}
+.sw .info{padding:12px 14px}
+.sw .name{font:700 14px/1.3 var(--font)}
+.sw .tok{font:400 12px/1.4 var(--font);color:var(--steel);margin-top:3px;word-break:break-all}
+.sw .use{font-size:13px;line-height:1.5;color:var(--steel);margin-top:6px}
+.sw:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.rule{background:var(--primary-pale-2);border-radius:var(--r-sm);padding:16px 20px;font-size:15px;margin-top:16px}
+.ratio{display:flex;height:24px;border-radius:6px;overflow:hidden;margin:10px 0 4px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--primary-deep);color:#fff;padding:10px 18px;border-radius:var(--r-pill);font:500 13px/1 var(--font);opacity:0;transition:.2s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--hairline);border-radius:var(--r-md)}
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th{text-align:left;font:600 14px/1.3 var(--font);background:var(--primary);color:#fff;padding:11px 14px;white-space:nowrap}
+.tbl td{padding:11px 14px;border-bottom:1px solid var(--hairline);vertical-align:middle}
+.tbl tr:nth-child(odd) td{background:var(--surface)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td.spec{font-size:13px;color:var(--steel);white-space:nowrap}
+
+.fonts{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.font-card{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);padding:22px}
+.font-card .big{font-size:52px;line-height:1;margin-bottom:14px}
+.font-card .nm{font:700 16px/1.3 var(--font)}
+.font-card .rl{font-size:14px;color:var(--steel);margin-top:4px}
+.mixdemo{border:1px solid var(--hairline);border-radius:var(--r-md);padding:18px 22px;margin-top:14px}
+.mixdemo .row{display:grid;grid-template-columns:120px minmax(0,1fr);gap:16px;align-items:baseline;padding:6px 0}
+.mixdemo .l{font:700 12px/1.3 var(--font);color:var(--steel);letter-spacing:.06em;text-transform:uppercase}
+.mixdemo .t{font-size:19px}
+.mixdemo .t .en{color:var(--primary)}
+
+/* grid diagram */
+.gd{background:var(--canvas);border:1px solid var(--hairline-strong);border-radius:var(--r-sm);aspect-ratio:16/9;position:relative;overflow:hidden;container-type:inline-size}
+.gd .m{position:absolute;top:0;bottom:0;width:5.25%;background:var(--primary-pale-2);border-right:1.5px dashed var(--primary)}
+.gd .m.r{right:0;border-right:0;border-left:1.5px dashed var(--primary)}
+.gd .z{position:absolute;left:5.25%;right:5.25%;border:1px solid var(--hairline);background:var(--surface);border-radius:4px;display:flex;align-items:center;padding:0 1.2cqw;font:500 max(10px,1.1cqw)/1.2 var(--font);color:var(--steel)}
+.gd .ft{position:absolute;left:0;right:0;bottom:0;height:4.5%;background:var(--primary-deep);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 5.25%;font:500 max(9px,.9cqw)/1 var(--font)}
+.gd .lbl{position:absolute;font:600 max(10px,1cqw)/1 var(--font);color:var(--primary);background:#fff;padding:2px 4px}
+
+.radii{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px}
+.radius{border:1px solid var(--hairline);border-radius:var(--r-md);padding:14px;text-align:center;font-size:13px}
+.radius .box{height:70px;background:var(--primary-pale);border:1px solid var(--hairline-strong);margin-bottom:10px}
+.elev{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.lv{border-radius:var(--r-md);padding:22px;min-height:120px;font-size:14px}
+.lv b{display:block;font:700 16px/1.3 var(--font);margin-bottom:6px}
+.windemo{background:var(--primary-deep);border-radius:var(--r-md);height:220px;position:relative;overflow:hidden;margin-top:16px}
+.windemo .win.w1{width:170px;height:170px;left:50%;top:50%;transform:translate(-50%,-50%)}
+.windemo .win.w2{width:100px;height:100px;left:50%;top:50%;transform:translate(-50%,-50%);border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.06)}
+.windemo span{position:absolute;left:20px;bottom:16px;color:#D5DFEF;font-size:13px}
+
+/* components */
+.demo{border:1px solid var(--hairline);border-radius:var(--r-md);padding:24px;margin-bottom:14px}
+.demo .label{font:500 12px/1.4 var(--font);color:var(--steel);margin-bottom:16px}
+.demo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tag{display:inline-flex;align-items:center;background:var(--primary-pale);color:var(--primary);font:700 12.5px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-radius:var(--r-pill)}
+.tag.am{background:var(--amber-pale);color:#8A5A12}
+.hcard{background:var(--surface);border:1px solid var(--hairline);border-radius:var(--r-md);padding:20px}
+.hcard .t,.vt .t{font:700 18px/1.35 var(--font);margin:0 0 6px}
+.hcard p{margin:0;color:var(--steel);font-size:15px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.vt{background:var(--primary-deep);color:#fff;border-radius:var(--r-md);padding:22px}
+.vt .n{font:700 24px/1 var(--font);color:var(--amber);display:block;margin-bottom:12px}
+.vt p{margin:0;color:#D5DFEF;font-size:14.5px}
+.stat{border:1px solid var(--hairline-strong);border-radius:var(--r-lg);padding:24px}
+.stat .num{font:700 60px/1 var(--font);color:var(--primary-deep);letter-spacing:-1px;margin:16px 0 14px}
+.stat .num small{font-size:22px;color:var(--steel);margin-left:6px;letter-spacing:0}
+.stat dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:0;font-size:14.5px;border-top:1px solid var(--hairline);padding-top:12px}
+.stat dt{color:var(--steel)} .stat dd{margin:0;font-weight:600}
+.note{background:var(--primary-pale-2);border-radius:var(--r-sm);padding:16px 20px;font-size:15px}
+.note b{color:var(--primary)}
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.flow .st{flex:1 1 140px;border:1px solid var(--hairline-strong);border-radius:var(--r-sm);padding:16px;font:700 16px/1.35 var(--font);background:#fff}
+.flow .st small{display:block;font:400 13.5px/1.45 var(--font);color:var(--steel);margin-top:4px}
+.flow .st.first{background:var(--primary-deep);color:#fff;border-color:var(--primary-deep)} .flow .st.first small{color:#D5DFEF}
+.flow .ar{flex:0 0 34px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:22px}
+.good{color:var(--good);font-weight:700} .risk{color:var(--risk);font-weight:700}
+.fig{border:1.5px dashed var(--hairline-strong);background:var(--surface);border-radius:var(--r-md);aspect-ratio:16/7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--steel);font-size:13px;letter-spacing:.06em}
+.fig i{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--hairline-strong);display:inline-block;background:#fff}
+
+/* slide mocks */
+.slides2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.sl{aspect-ratio:16/9;position:relative;overflow:hidden;border:1px solid var(--hairline-strong);border-radius:var(--r-sm);container-type:inline-size;background:#fff}
+.sl.dk{background:var(--primary-deep);border-color:var(--primary-deep);color:#fff}
+.sl .pad{position:absolute;left:5.25cqw;right:5.25cqw;top:0;bottom:0}
+.sl .e{position:absolute;top:4.4cqw;font:700 max(8px,1.02cqw)/1 var(--font);letter-spacing:.12em;color:var(--steel)}
+.sl .e b{color:var(--primary)} .sl.dk .e{color:#D5DFEF} .sl.dk .e b{color:var(--amber)}
+.sl .lg{position:absolute;right:0;top:3.4cqw;height:4.6cqw} .sl .lg svg{height:100%;width:auto;display:block}
+.sl .tt{position:absolute;top:7cqw;margin:0;font:700 max(11px,2.5cqw)/1.2 var(--font);max-width:70%}
+.sl .sb{position:absolute;top:10.8cqw;font-size:max(8px,1.25cqw);color:var(--steel)}
+.sl .body{position:absolute;top:15.5cqw;left:0;right:0;display:grid;grid-template-columns:repeat(3,1fr);gap:1.6cqw}
+.sl .bx{background:var(--surface);border:1px solid var(--hairline);border-radius:1.1cqw;padding:1.5cqw;font-size:max(7px,1.05cqw);line-height:1.5;color:var(--steel)}
+.sl .bx b{display:block;color:var(--ink);font:700 max(8px,1.3cqw)/1.3 var(--font);margin-bottom:.5cqw}
+.sl .bar{position:absolute;left:0;right:0;bottom:0;height:5.2%;background:var(--primary-deep);display:flex;align-items:center;justify-content:space-between;padding:0 5.25cqw;color:#fff;font:500 max(6px,.75cqw)/1 var(--font);letter-spacing:.06em}
+.sl .bar .bl{height:60%} .sl .bar .bl svg{height:100%;width:auto;display:block}
+.sl.dk .ctr{position:absolute;left:5.25cqw;top:30%;max-width:60%}
+.sl.dk .ctr .k{font:700 max(8px,1.02cqw)/1 var(--font);letter-spacing:.16em;color:var(--amber)}
+.sl.dk .ctr .h{font:700 max(12px,3.44cqw)/1.15 var(--font);margin:1.6cqw 0 1.2cqw}
+.sl.dk .ctr .p{font-size:max(8px,1.25cqw);color:#D5DFEF}
+.sl.dk .clg{position:absolute;left:5.25cqw;bottom:6cqw;height:6cqw} .sl.dk .clg svg{height:100%;width:auto;display:block}
+.sl .blob.b1{width:52cqw;height:52cqw;right:-14cqw;top:-20cqw}
+.sl .blob.b2{width:34cqw;height:34cqw;right:-4cqw;top:-8cqw}
+.sl .win.w1{width:20cqw;height:20cqw;right:8cqw;bottom:-5cqw}
+.sl .win.w2{width:11cqw;height:11cqw;right:12.5cqw;bottom:-.5cqw;border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.06)}
+
+/* logos */
+.logos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.lgv{border-radius:var(--r-md);padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:170px;border:1px solid var(--hairline)}
+.lgv .lw{display:flex;align-items:center;justify-content:center;flex:1}
+.lgv svg{width:100%;max-width:220px;height:auto;display:block}
+.lgv .lw span svg{max-width:none}
+.lgv .cap{font:500 12.5px/1.4 var(--font);color:var(--steel)}
+.lgv.dk{background:var(--primary-deep);border-color:var(--primary-deep)} .lgv.dk .cap{color:#D5DFEF}
+.dosdonts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.dd{border-radius:var(--r-md);padding:22px 24px}
+.dd .h4{margin:0 0 10px;font:700 16px/1.3 var(--font)}
+.dd ul{margin:0;padding-left:18px;font-size:14.5px;line-height:1.8}
+.dd.do{background:var(--good-pale);border:1px solid #BFE0CB} .dd.dont{background:var(--risk-pale);border:1px solid #EBC5C3}
+footer{margin-top:80px;padding-top:20px;border-top:1px solid var(--hairline);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font:500 12.5px/1.5 var(--font);color:var(--steel)}
+
+@media (max-width:1023px){
+  .shell{grid-template-columns:1fr}
+  nav.side{position:sticky;top:0;height:auto;z-index:5;background:#fff;display:flex;gap:4px;overflow-x:auto;padding:10px 16px;border-bottom:1px solid var(--hairline)}
+  nav.side .mark{display:none} nav.side a{white-space:nowrap;flex:none}
+  main{padding:0 24px 64px} .cover{margin:0 -24px;padding:48px 32px}
+  .logos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slides2,.demo-grid,.dosdonts{grid-template-columns:1fr}
+}
+@media (max-width:767px){
+  main{padding:0 16px 48px} .cover{margin:0 -16px;padding:40px 20px} .cover h1{font-size:34px}
+  section{padding-top:52px} h2{font-size:27px}
+  .logos,.tiles{grid-template-columns:1fr}
+  .mixdemo .row{grid-template-columns:1fr;gap:2px}
+  .flow{flex-direction:column} .flow .ar{transform:rotate(90deg);flex-basis:28px}
+  .demo{padding:18px}
+}
+
+.lang-toggle{position:fixed;top:16px;right:16px;z-index:30;display:inline-flex;gap:2px;padding:3px;border-radius:999px;background:rgba(255,255,255,.92);border:1px solid rgba(0,0,0,.12);box-shadow:0 2px 8px rgba(0,0,0,.08);backdrop-filter:blur(6px)}
+.lang-toggle button{font:600 13px/1 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.04em;border:0;background:transparent;color:#555;min-width:44px;height:32px;padding:0 12px;border-radius:999px;cursor:pointer}
+.lang-toggle button[aria-pressed="true"]{background:#111;color:#fff}
+.lang-toggle button:focus-visible{outline:2px solid #111;outline-offset:2px}
+.src-note{display:none;font-size:13px;margin:0 0 10px;opacity:.75}
+html[lang="en"] .src-note{display:block}
+.ko-only,.en-only{display:block}
+html[lang="en"] .ko-only{display:none}
+html:not([lang="en"]) .en-only{display:none}
+@media (max-width:1023px){.lang-toggle{top:auto;bottom:16px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<nav class="side" aria-label="섹션">
+  <span class="mark"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 201">
+
+<g fill="#1F4E9C"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 191H498.503C499.33 191 500 191.895 500 193V199C500 200.105 499.33 201 498.503 201H1.497C.67 201 0 200.105 0 199V193C0 191.895 .67 191 1.497 191Z"/></g>
+</svg>
+</span>
+  <a href="#overview">Overview</a><a href="#colors">Colors</a><a href="#typography">Typography</a><a href="#layout">Layout</a>
+  <a href="#shapes">Shapes &amp; Depth</a><a href="#components">Components</a><a href="#slides">Slides</a><a href="#logo">Logo</a><a href="#rules">Do's &amp; Don'ts</a>
+</nav>
+<main>
+<header class="cover" id="overview">
+  <span class="blob cb1"></span><span class="blob cb2"></span>
+  <div class="cv-left">
+    <div class="cv-logo" role="img" aria-label="BCT 로고 (주)비씨테크"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 289">
+
+<g fill="#FFFFFF"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 279H498.503C499.33 279 500 279.895 500 281V287C500 288.105 499.33 289 498.503 289H1.497C.67 289 0 288.105 0 287V281C0 279.895 .67 279 1.497 279Z"/></g>
+<g fill="#FFFFFF"><path d="M64.42 194H73Q71.307 197.23 69.719 202.09Q68.13 206.95 67.133 212.58Q66.136 218.209 66.136 223.469Q66.136 228.729 67.133 234.359Q68.13 239.988 69.719 244.864Q71.307 249.739 73 253H64.42Q60.849 246.386 58.925 239.081Q57 231.775 57 223.469Q57 215.164 58.925 207.873Q60.849 200.583 64.42 194ZM141 234.66H118.453V255H108.091V234.66H86V226.02H141ZM136.243 203.367H119.919Q120.864 207.517 125.376 210.714Q129.889 213.912 138.784 214.932L135.005 223.435Q127.022 222.483 121.662 219.524Q116.302 216.565 113.5 212.041Q110.73 216.565 105.403 219.524Q100.076 222.483 92.126 223.435L88.346 214.932Q97.111 213.912 101.607 210.731Q106.104 207.551 107.146 203.367H90.822V195H136.243ZM162.58 253H154Q155.693 249.739 157.281 244.864Q158.87 239.988 159.867 234.359Q160.864 228.729 160.864 223.469Q160.864 218.209 159.867 212.58Q158.87 206.95 157.281 202.09Q155.693 197.23 154 194H162.58Q166.151 200.583 168.075 207.873Q170 215.164 170 223.469Q170 231.775 168.075 239.081Q166.151 246.386 162.58 253ZM197.299 214.05H206.893V194H217V255H187V194H197.299ZM206.893 242.8V225.777H197.299V242.8ZM236 255H227V194H236ZM272.441 234.069Q274.198 228.469 274.784 221.766Q275.369 215.064 275.369 206.288V195H284.329V206.288Q284.329 215.019 284.812 221.413Q285.295 227.807 286.964 233.584Q288.633 239.36 292 243.417L286.32 253.383Q281.752 247.959 279.644 237.111Q277.331 248.444 272.441 254Q267.61 248.664 265.268 237.641Q263.306 247.562 259.032 252.854L253 243.417Q256.367 239.316 258.051 233.562Q259.734 227.807 260.203 221.479Q260.671 215.152 260.671 206.288V195H269.396V206.288Q269.396 214.931 270.011 221.7Q270.626 228.469 272.441 234.069ZM305 255H296V194H305ZM346.699 208.587H333.411V217.172H344.575V225.617H333.411V235.318Q337.486 235.248 341.065 234.952Q344.644 234.655 348.616 234.062L349.507 242.995Q344.575 243.868 339.884 244.095Q335.192 244.322 327.452 244.322H323V199.863H346.699ZM363 255H352.863V224.919H347.178V216.125H352.863V194H363ZM376 255H367V194H376ZM446 255H391V244.707H446ZM441.047 203.298Q441.047 210.319 440.901 215.266Q440.754 220.213 440.135 226.656Q439.516 233.098 438.18 240.878L427.754 239.681Q429.318 231.981 430.034 224.681L396.344 226.596L395.105 216.463L430.653 215.106Q430.816 210.758 430.816 205.133H397.06V195H441.047Z"/></g>
+</svg>
+</div>
+    <div class="cv-k">BRAND DESIGN SYSTEM · PRESENTATION · DOCUMENT</div>
+    <h1>BCT 디자인 시스템<br><span class="am">v1.1</span></h1>
+    <p class="cv-sub">반도체 장비 부품 위탁 생산 전문기업 ㈜비씨테크의 색, 서체, 그리드, 컴포넌트, 로고 규칙. 흰 캔버스 위 BCT 블루 단색, 표지·구분·클로징만 남색, 포인트는 앰버 하나.</p>
+    <div class="cv-q">“Everything we deliver, seen through one window.”</div>
+    <div class="cv-by"><div class="s">PREPARED BY · BRAND MARKETING · 2026-11-10</div><div class="n">BCT · (주)비씨테크</div></div>
+  </div>
+  <div class="cv-right">
+    <svg class="wa" viewBox="0 0 420 380" role="img" aria-label="두 겹의 window 안에서 BCT 슬라이드 한 장이 그리드, 제목, 카드, 푸터 순으로 조립되고 색 토큰이 채워진다">
+      <rect class="w w1" x="20" y="6" width="380" height="300"/>
+      <rect class="w w2" x="70" y="46" width="280" height="220"/>
+      <text class="wl" x="30" y="24">ONE WINDOW · BCT</text>
+      <text class="wl" x="80" y="64">SLIDE 16:9 · 1280×720</text>
+      <!-- the slide -->
+      <rect class="sf" x="90" y="80" width="240" height="135" rx="3"/>
+      <line class="guide" x1="102.6" y1="80" x2="102.6" y2="215"/><line class="guide" x1="317.4" y1="80" x2="317.4" y2="215"/>
+      <rect class="bar eb" x="102.6" y="92" width="34" height="4" rx="1"/>
+      <rect x="292" y="88" width="24" height="10" rx="1" class="fmk" fill="#1F4E9C"/>
+      <rect class="bar tt" x="102.6" y="102" width="120" height="9" rx="1.5"/>
+      <rect class="bar sb" x="102.6" y="116" width="80" height="4" rx="1"/>
+      <rect class="cd" x="102.6" y="132" width="66" height="54" rx="3"/>
+      <rect class="cd cd2" x="177" y="132" width="66" height="54" rx="3"/>
+      <rect class="cd cd3" x="251.4" y="132" width="66" height="54" rx="3"/>
+      <rect class="hl" x="110" y="166" width="22" height="6" rx="1"/>
+      <circle class="ring" cx="121" cy="169" r="6"/>
+      <rect class="ft" x="90" y="203" width="240" height="12"/>
+      <g class="fmk"><rect x="100" y="206" width="6" height="6" fill="#fff"/><rect x="101.3" y="207.3" width="3.4" height="3.4" fill="#153B78"/><text x="110" y="211.5" style="font:700 6px 'GSans','Google Sans',sans-serif;fill:#fff">BCT</text><text x="320" y="211.5" text-anchor="end" style="font:700 6px 'GSans','Google Sans',sans-serif;fill:#fff">01 / 11</text></g>
+      <!-- tokens -->
+      <text class="wl" x="70" y="290">TOKENS</text>
+      <g transform="translate(140 279)">
+        <rect class="tk tk1" x="0" y="0" width="34" height="14" rx="3" fill="#1F4E9C"/>
+        <rect class="tk tk2" x="40" y="0" width="34" height="14" rx="3" fill="#153B78" stroke="rgba(255,255,255,.35)"/>
+        <rect class="tk tk3" x="80" y="0" width="34" height="14" rx="3" fill="#EAF1FC"/>
+        <rect class="tk tk4" x="120" y="0" width="34" height="14" rx="3" fill="#C98A2B"/>
+      </g>
+      <text class="ok" x="350" y="290" text-anchor="end">ON BRAND ✓</text>
+      <text class="wl" x="70" y="330">BLUE 60–70%</text>
+      <text class="wl" x="350" y="330" text-anchor="end">AMBER 1–2 / SLIDE</text>
+    </svg>
+    <div class="cv-stats">
+      <div><b>19<small>colors</small></b><span>색 토큰 · 4개 그룹</span></div>
+      <div><b>11<small>layouts</small></b><span>슬라이드 패턴</span></div>
+      <div><b>13<small>pt</small></b><span>본문 최소 크기</span></div>
+    </div>
+  </div>
+  <div class="cv-foot"><span class="fm"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+
+<path fill="#FFFFFF" fill-rule="evenodd" d="M0 0H70V70H0Z M15 15V55H55V15Z"/><rect x="15" y="15" width="40" height="40" fill="#FFFFFF" fill-opacity="0.63"/>
+</svg>
+BCT</span><span class="doc">BCT DESIGN SYSTEM · BRAND MARKETING</span><span class="pg">01</span></div>
+</header>
+<div class="tabs" role="tablist"><button role="tab" aria-selected="true" data-view="live">Live Preview</button><button role="tab" aria-selected="false" data-view="source">DESIGN.md</button></div>
+<div id="source"><p class="src-note" lang="en">DESIGN.md is written in Korean. The source below is shown as is.</p><pre>---
+version: 1.1
+name: bct-design-system
+description: 반도체 장비 부품 위탁 생산 전문기업 ㈜비씨테크(BCT)의 디자인 시스템. 흰 캔버스 위에 BCT 블루(`#1F4E9C`) 단색 계열을 60~70% 쓰고, 짙은 남색(`#153B78`)은 표지·구분·클로징에만, 앰버(`#C98A2B`) 하나를 유일한 포인트 색으로 슬라이드당 1~2곳에만 쓴다. 영문·숫자는 Google Sans, 한글은 Gowun Batang. 구획은 hairline과 여백으로만 한다. 로고는 위아래 블루 바 사이에 BCT 워드마크를 둔 형태로, 단독형과 &quot;(주)비씨테크&quot; 국문 병기형이 있고, 파비콘·프리젠테이션·문서 하단에 쓰는 정사각형 마크가 있다.
+
+colors:
+  primary: &quot;#1F4E9C&quot;
+  primary-deep: &quot;#153B78&quot;
+  primary-deeper: &quot;#0F2C5C&quot;
+  primary-pale: &quot;#EAF1FC&quot;
+  primary-pale-2: &quot;#F4F8FE&quot;
+  on-primary: &quot;#FFFFFF&quot;
+  canvas: &quot;#FFFFFF&quot;
+  surface: &quot;#F6F9FD&quot;
+  ink: &quot;#0B1220&quot;
+  steel: &quot;#5B6472&quot;
+  steel-soft: &quot;#8A93A3&quot;
+  hairline: &quot;#E2E8F3&quot;
+  hairline-strong: &quot;#CBD8ED&quot;
+  amber: &quot;#C98A2B&quot;
+  amber-pale: &quot;#FBE8D3&quot;
+  good: &quot;#1F8A5F&quot;
+  good-pale: &quot;#E4F3EA&quot;
+  risk: &quot;#C1443C&quot;
+  risk-pale: &quot;#FBE7E5&quot;
+  logo-blue: &quot;#1F4E9C&quot;
+  logo-ink: &quot;#1A1A1A&quot;
+
+typography:
+  cover-title:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 44px
+    pptSize: 40pt
+    fontWeight: 700
+    lineHeight: 1.15
+    letterSpacing: 0
+  section-number:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, sans-serif&quot;
+    fontSize: 200px
+    pptSize: 150pt
+    fontWeight: 700
+    lineHeight: 0.9
+    letterSpacing: -2px
+  section-title:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 40px
+    pptSize: 32pt
+    fontWeight: 700
+    lineHeight: 1.2
+    letterSpacing: 0
+  slide-title:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 32px
+    pptSize: 26pt
+    fontWeight: 700
+    lineHeight: 1.25
+    letterSpacing: 0
+  slide-subtitle:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 16px
+    pptSize: 13pt
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: 0
+  eyebrow:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, sans-serif&quot;
+    fontSize: 13px
+    pptSize: 11pt
+    fontWeight: 700
+    lineHeight: 1.2
+    letterSpacing: 0.12em
+    textTransform: uppercase
+  card-title:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 18px
+    pptSize: 15pt
+    fontWeight: 700
+    lineHeight: 1.35
+    letterSpacing: 0
+  body:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 16px
+    pptSize: 13.5pt
+    fontWeight: 400
+    lineHeight: 1.6
+    letterSpacing: 0
+  table-header:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 14px
+    pptSize: 12.5pt
+    fontWeight: 600
+    lineHeight: 1.3
+    letterSpacing: 0
+  table:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 14px
+    pptSize: 12.5pt
+    fontWeight: 400
+    lineHeight: 1.45
+    letterSpacing: 0
+  stat-number:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, sans-serif&quot;
+    fontSize: 60px
+    pptSize: 52pt
+    fontWeight: 700
+    lineHeight: 1.0
+    letterSpacing: -1px
+  footer:
+    fontFamily: &quot;&#x27;Google Sans&#x27;, &#x27;Gowun Batang&#x27;, sans-serif&quot;
+    fontSize: 12px
+    pptSize: 9pt
+    fontWeight: 500
+    lineHeight: 1.0
+    letterSpacing: 0.06em
+  logo-wordmark:
+    fontFamily: &quot;Montserrat ExtraBold&quot;
+    note: &quot;로고 파일 안에 아웃라인으로만 존재. 다시 타이핑하지 않는다&quot;
+  logo-wordmark-ko:
+    fontFamily: &quot;Pretendard Black (재구성)&quot;
+    note: &quot;(주)비씨테크 병기. 원래 글꼴 확인 시 교체 예정&quot;
+
+rounded:
+  none: 0px
+  sm: 9px
+  md: 14px
+  lg: 18px
+  pill: 999px
+
+spacing:
+  xxs: 4px
+  xs: 8px
+  sm: 12px
+  md: 16px
+  lg: 24px
+  xl: 32px
+  xxl: 48px
+  margin-x: 67px
+
+components:
+  hairline-card:
+    backgroundColor: &quot;{colors.surface}&quot;
+    textColor: &quot;{colors.ink}&quot;
+    typography: &quot;{typography.body}&quot;
+    rounded: &quot;{rounded.md}&quot;
+    padding: 20px
+  value-tile:
+    backgroundColor: &quot;{colors.primary-deep}&quot;
+    textColor: &quot;{colors.on-primary}&quot;
+    typography: &quot;{typography.card-title}&quot;
+    rounded: &quot;{rounded.md}&quot;
+    padding: 22px
+  stat-card:
+    backgroundColor: &quot;{colors.canvas}&quot;
+    textColor: &quot;{colors.primary-deep}&quot;
+    typography: &quot;{typography.stat-number}&quot;
+    rounded: &quot;{rounded.lg}&quot;
+    padding: 24px
+  tag:
+    backgroundColor: &quot;{colors.primary-pale}&quot;
+    textColor: &quot;{colors.primary}&quot;
+    typography: &quot;{typography.eyebrow}&quot;
+    rounded: &quot;{rounded.pill}&quot;
+    padding: 4px 12px
+  note-box:
+    backgroundColor: &quot;{colors.primary-pale-2}&quot;
+    textColor: &quot;{colors.ink}&quot;
+    typography: &quot;{typography.body}&quot;
+    rounded: &quot;{rounded.sm}&quot;
+    padding: 16px 20px
+  data-table-header:
+    backgroundColor: &quot;{colors.primary}&quot;
+    textColor: &quot;{colors.on-primary}&quot;
+    typography: &quot;{typography.table-header}&quot;
+  data-table-row-even:
+    backgroundColor: &quot;{colors.surface}&quot;
+    textColor: &quot;{colors.ink}&quot;
+    typography: &quot;{typography.table}&quot;
+  process-step:
+    backgroundColor: &quot;{colors.canvas}&quot;
+    textColor: &quot;{colors.ink}&quot;
+    typography: &quot;{typography.card-title}&quot;
+    rounded: &quot;{rounded.sm}&quot;
+    padding: 16px
+  process-step-start:
+    backgroundColor: &quot;{colors.primary-deep}&quot;
+    textColor: &quot;{colors.on-primary}&quot;
+    typography: &quot;{typography.card-title}&quot;
+    rounded: &quot;{rounded.sm}&quot;
+    padding: 16px
+  figure-placeholder:
+    backgroundColor: &quot;{colors.surface}&quot;
+    textColor: &quot;{colors.steel}&quot;
+    typography: &quot;{typography.footer}&quot;
+    rounded: &quot;{rounded.md}&quot;
+  slide-light:
+    backgroundColor: &quot;{colors.canvas}&quot;
+    textColor: &quot;{colors.ink}&quot;
+    typography: &quot;{typography.slide-title}&quot;
+    padding: 0 67px
+  slide-dark:
+    backgroundColor: &quot;{colors.primary-deep}&quot;
+    textColor: &quot;{colors.on-primary}&quot;
+    typography: &quot;{typography.cover-title}&quot;
+    padding: 0 67px
+  footer-bar:
+    backgroundColor: &quot;{colors.primary-deep}&quot;
+    textColor: &quot;{colors.on-primary}&quot;
+    typography: &quot;{typography.footer}&quot;
+    height: 33px
+  window-motif:
+    backgroundColor: &quot;{colors.primary-deep}&quot;
+    textColor: &quot;{colors.on-primary}&quot;
+    rounded: &quot;{rounded.none}&quot;
+---
+
+## Overview
+
+㈜비씨테크(BCT)는 반도체 장비 부품 위탁 생산 전문기업이다. 제안서, 회사소개, 기술문서, 작업절차서, 검사성적서, 부적합 보고서처럼 고객사에 내는 자료가 많고, 모두 같은 디자인 언어를 쓴다. 그 출발점은 BCT가 이미 운영하는 웹 시스템(OPS Hub)의 브랜드 언어다. 블루 단색 팔레트, hairline 카드, 둥근 모서리, 그리고 &quot;하나의 창으로 본다&quot;는 window 모티프다.
+
+시스템은 **흰 캔버스**(`{colors.canvas}`) 위에 **BCT 블루**(`{colors.primary}` — `#1F4E9C`) 계열을 한 화면의 60~70%로 쓴다. **짙은 남색**(`{colors.primary-deep}` — `#153B78`)은 표지·구분·클로징 슬라이드 배경과 다크 타일, 푸터 바에 쓴다. 강조는 **앰버**(`{colors.amber}` — `#C98A2B`) 한 가지뿐이고 슬라이드당 1~2곳으로 제한한다. Good·Risk는 표와 체크리스트의 값에만 쓴다.
+
+**Key Characteristics:**
+- 흰 캔버스 + BCT 블루 단색 계열 60~70%. 남색은 표지·구분·클로징 전용
+- 앰버(`{colors.amber}`)가 유일한 포인트 색. 큰 숫자·핵심 라벨, 슬라이드당 1~2곳
+- 그린 계열 강조색은 쓰지 않는다(참고 자료의 그린은 앰버로 대체)
+- 영문 알파벳과 숫자는 항상 Google Sans, 한글은 Gowun Batang
+- 카드·표는 hairline과 여백으로만 구획. 그림자·좌측 색 띠·제목 밑줄 없음
+- 16:9, 좌우 여백 67px(0.7in), 본문 슬라이드 우상단에 BCT 로고, 하단 남색 푸터 바
+- 표지·구분·클로징에만 사각형 두 겹의 window 모티프
+
+## Colors
+
+### Brand &amp; Accent
+- **BCT Blue** (`{colors.primary}` — `#1F4E9C`): 본문 강조, 아이콘, 표 머리글, eyebrow 번호, 링크. 로고의 바와 워드마크 색과 같다.
+- **BCT Blue Deep** (`{colors.primary-deep}` — `#153B78`): 표지·구분·클로징 배경, 다크 카드·밸류 타일, 푸터 바.
+- **BCT Blue Deeper** (`{colors.primary-deeper}` — `#0F2C5C`): 표지 배경의 원형 블롭 두 번째 겹. 그라디언트 대신 겹으로 깊이를 낸다.
+- **Amber** (`{colors.amber}` — `#C98A2B`): **유일한 포인트 색.** 큰 숫자, 핵심 라벨 1~2곳, 다크 슬라이드의 eyebrow 번호.
+
+### Surface
+- **Canvas** (`{colors.canvas}` — `#FFFFFF`): 기본 슬라이드·페이지 배경.
+- **Surface** (`{colors.surface}` — `#F6F9FD`): 카드·플레이스홀더 배경, 표의 짝수 행.
+- **Blue Pale** (`{colors.primary-pale}` — `#EAF1FC`): 태그·배지 배경, 밝은 강조 영역.
+- **Blue Pale 2** (`{colors.primary-pale-2}` — `#F4F8FE`): Note 박스 등 가장 옅은 틴트.
+- **Hairline** (`{colors.hairline}` — `#E2E8F3`): 기본 구분선·카드 테두리.
+- **Hairline Strong** (`{colors.hairline-strong}` — `#CBD8ED`): 표·통계 카드 테두리.
+
+### Text
+- **Ink** (`{colors.ink}` — `#0B1220`): 제목·본문 기본 글자.
+- **Steel** (`{colors.steel}` — `#5B6472`): 보조 설명.
+- **Steel Soft** (`{colors.steel-soft}` — `#8A93A3`): 캡션, 페이지 태그, 비활성. 장식성 글자에만.
+- **On Primary** (`{colors.on-primary}` — `#FFFFFF`): 블루·남색 위 글자.
+
+### Semantic
+- **Good** (`{colors.good}` — `#1F8A5F`) / **Good Pale** (`{colors.good-pale}`): 표의 긍정 값(유효·양호) 전용.
+- **Risk** (`{colors.risk}` — `#C1443C`) / **Risk Pale** (`{colors.risk-pale}`): 위험·주의 값 전용. 남용 금지.
+- **Amber Pale** (`{colors.amber-pale}` — `#FBE8D3`): 앰버 라벨의 옅은 바탕.
+
+### Logo Colors
+
+로고 사용 가이드 v1.0의 값이다.
+
+| 이름 | HEX | RGB | CMYK (인쇄) | 쓰는 곳 |
+|---|---|---|---|---|
+| BCT Blue | `#1F4E9C` | 31 78 156 | C80 M50 Y0 K39 (임시) | 바, BCT 워드마크 |
+| Ink | `#1A1A1A` | 26 26 26 | K90 | (주)비씨테크 |
+| Black | `#000000` | 0 0 0 | K100 | 단색(black) 변형 |
+| White | `#FFFFFF` | 255 255 255 | 인쇄 안 함 | white 변형 |
+
+BCT Blue의 CMYK는 RGB를 수식으로 환산한 임시값이다. 첫 인쇄 때 인쇄소 교정본으로 확정한다.
+
+### Accessibility Notes
+
+| 조합 | 명도비 | 쓰는 법 |
+|---|---|---|
+| `{colors.primary}` 글자 / `{colors.canvas}` | 8.0:1 | 본문 링크·강조에 그대로 쓴다 |
+| `{colors.on-primary}` 글자 / `{colors.primary-deep}` | 10.9:1 | 다크 슬라이드 본문 |
+| `{colors.amber}` 글자 / `{colors.canvas}` | 2.9:1 | 본문 크기 글자로는 기준 미달. 큰 숫자(24px 이상 Bold)·라벨 배경색으로 쓴다 |
+| `{colors.amber}` 글자 / `{colors.primary-deep}` | 3.7:1 | 다크 슬라이드의 큰 숫자·eyebrow 번호(Bold)에만 |
+| `{colors.steel-soft}` 글자 / `{colors.canvas}` | 3.1:1 | 장식성 캡션·페이지 태그에만. 읽어야 할 정보는 `{colors.steel}`(6.0:1) |
+
+## Typography
+
+### Font Family
+
+- **영문 알파벳과 숫자는 항상 Google Sans.** 제목, 본문, 표, 라벨, eyebrow, 푸터, 페이지 번호 모두 해당한다.
+- **한글은 Gowun Batang.**
+- 한 문장에 한글과 영문·숫자가 섞이면 글자 종류별로 나눠 각각 위 서체를 쓴다(예: &quot;Heater Module 1개당 4가닥&quot; → `Heater Module 1` Google Sans / `개당 ` Gowun Batang / `4` Google Sans / `가닥` Gowun Batang). 공백·기호는 앞 조각에 붙인다.
+- **웹**: `font-family: &quot;Google Sans&quot;, &quot;Gowun Batang&quot;, sans-serif;` 순서로 지정하면 Google Sans에 한글이 없어서 글자 단위로 자동 전환된다.
+- **PPT**: 텍스트 run을 글자 종류별로 나눠 run마다 서체를 지정한다(bct-presentation 스킬의 `split()` 헬퍼).
+- JetBrains Mono는 영문·숫자에 쓰지 않는다. 코드 블록을 그대로 보여 줄 때만 예외.
+
+### Hierarchy — Slides (PPT 13.333×7.5in / Web 1280×720)
+
+| Token | PPT | Web | Weight | Use |
+|---|---|---|---|---|
+| `{typography.cover-title}` | 40pt | 44px | 700 | 표지 제목 |
+| `{typography.section-number}` | 150pt | 200px | 700 | 구분 슬라이드 큰 번호 |
+| `{typography.section-title}` | 32pt | 40px | 700 | 구분 슬라이드 제목 |
+| `{typography.slide-title}` | 26pt | 32px | 700 | 슬라이드 제목 |
+| `{typography.slide-subtitle}` | 13pt | 16px | 400 | 부제 |
+| `{typography.eyebrow}` | 11pt | 13px | 700 | 섹션 번호 + 영문 대문자 태그 |
+| `{typography.card-title}` | 14~16pt | 15~19px | 700 | 카드·타일 제목 |
+| `{typography.body}` | 13~13.5pt | 16px | 400 | 본문 |
+| `{typography.table-header}` / `{typography.table}` | 12~13pt | 12~15px | 600 / 400 | 표 머리글 / 본문 |
+| `{typography.stat-number}` | 48~56pt | 60~64px | 700 | 큰 통계 숫자 |
+| `{typography.footer}` | 9~9.5pt | 11~12px | 500 / 700 | 푸터, 페이지 번호 |
+
+**하한선:** 이 표보다 작게 내리지 않는다. 발표 화면 뒷자리에서도 읽혀야 한다는 것이 BCT의 명시적 요구사항이다(본문 13pt 이상, 제목 26pt 이상).
+
+### Logo Typefaces
+
+로고 파일 안에서만 쓰이고, 모두 아웃라인(패스)으로 들어 있다.
+
+- **BCT (영문)**: Montserrat ExtraBold
+- **(주)비씨테크 (국문)**: Pretendard Black(재구성). 원본이 PNG뿐이라 원본 글자 상자에 맞춰 다시 그렸다. 원래 글꼴을 확인하면 교체한다.
+
+## Layout
+
+### Slide Grid
+
+- **크기**: PPT 13.333×7.5in(pptxgenjs `LAYOUT_WIDE`) / Web 1280×720px.
+- **좌우 여백**: `{spacing.margin-x}`(67px = 0.7in) 고정.
+- **헤더**: eyebrow 0.42in → 제목 0.68in → (선택) 부제 1.28in. 본문 슬라이드 우상단에 BCT 로고(높이 0.46in). 제목 상자 폭은 로고와 겹치지 않게 1.05in 줄인다.
+- **본문 영역**: 1.5~1.95in에서 6.85in까지.
+- **푸터 바**: 높이 0.34in, 남색(`{colors.primary-deep}`) 배경. 왼쪽 BCT 마크(`bct_mark_white`) + BCT, 가운데 문서명(흐리게), 오른쪽 페이지 번호. 다크 슬라이드에서는 채운 바 대신 상단 hairline만.
+- 헤더·푸터 높이는 슬라이드 유형과 상관없이 같다.
+
+### Slide Patterns
+
+1. 표지 — 남색, 흰 로고(왼쪽 위), 앰버 키커, 두 줄 제목(둘째 줄 앰버 강조), 인용 한 줄, 원형 블롭 2개, 오른쪽에 내용을 보여 주는 window 모션 그래픽 + 지표 카드 3개, 하단 hairline 푸터(마크)
+2. 목차
+3. 구분 — 남색, 큰 번호 + 제목
+4. 2단 + 밸류 타일
+5. 번호 목록
+6. 이중 표
+7. 프로세스 플로우
+8. 이미지 + 불릿
+9. 빅 스탯 비교
+10. 비교표
+11. 클로징 — 남색, 흰 로고
+
+### Spacing System
+
+- **Base unit**: 8px. 구조 여백은 16px(0.16in) 단위.
+- **Tokens**: `{spacing.xxs}` 4px · `{spacing.xs}` 8px · `{spacing.sm}` 12px · `{spacing.md}` 16px · `{spacing.lg}` 24px · `{spacing.xl}` 32px · `{spacing.xxl}` 48px · `{spacing.margin-x}` 67px
+- 카드 사이 간격은 14px 이상. 다닥다닥 붙이지 않는다.
+
+## Elevation &amp; Depth
+
+| Level | Treatment | Use |
+|---|---|---|
+| 0 — Flat | 테두리·그림자 없음 | 슬라이드 배경, 밸류 타일, 다크 패널 |
+| 1 — Hairline | 1px solid `{colors.hairline}` | 카드, 표, 프로세스 박스 |
+| 2 — Hairline Strong | 1px solid `{colors.hairline-strong}` | 통계 카드, 강조 표 |
+
+그림자는 쓰지 않는다. 깊이는 표지의 원형 블롭 두 겹(`{colors.primary-deep}` → `{colors.primary-deeper}`)으로 낸다. 그라디언트는 쓰지 않는다.
+
+### Window Motif
+
+사각형 **두 겹**(바깥 창틀 + 안쪽 창)으로 &quot;하나의 창으로 본다&quot;는 OPS Hub의 개념을 보여 주는 BCT의 시그니처 장식이다. 세 겹 이상 겹치지 않는다. 안쪽 사각형은 바깥 사각형 한 변의 약 60%이고 테두리를 더 밝게 둔다. 표지·구분·클로징 슬라이드의 남색 배경에만 쓰고, 본문 슬라이드에는 쓰지 않는다. 로고가 아니므로 로고 자리에 쓰지 않는다.
+
+## Shapes
+
+| Token | Value | Use |
+|---|---|---|
+| `{rounded.none}` | 0px | 슬라이드, window 모티프 |
+| `{rounded.sm}` | 9px | Note 박스, 프로세스 박스 |
+| `{rounded.md}` | 14px | hairline 카드, 밸류 타일, 플레이스홀더 |
+| `{rounded.lg}` | 18px | 통계 카드 |
+| `{rounded.pill}` | 999px | 태그·배지 |
+
+## Components
+
+### Labels
+
+**Eyebrow** — 두 자리 섹션 번호(블루 Bold, 다크 슬라이드에서는 앰버) + `/` + 영문 대문자 태그(회색), `{typography.eyebrow}`.
+
+**`tag`** — 배경 `{colors.primary-pale}`, 글자 `{colors.primary}`, `{rounded.pill}`. 통계 카드 상단, 상태 표시.
+
+### Cards &amp; Tiles
+
+**`hairline-card`** — 배경 `{colors.surface}`, 1px `{colors.hairline}`, `{rounded.md}`. 좌측 색 띠·그림자 없음.
+
+**`value-tile`** — 배경 `{colors.primary-deep}`, 흰 글자, 번호는 앰버. 2×2 또는 1×3 그리드.
+
+**`stat-card`** — 1px `{colors.hairline-strong}`, `{rounded.lg}`. 상단 `tag`, 큰 숫자(`{typography.stat-number}`, `{colors.primary-deep}`), 아래에 key-value 행.
+
+**`note-box`** — 배경 `{colors.primary-pale-2}`, `{rounded.sm}`. 보충 설명, 주의사항.
+
+### Data
+
+**데이터 표** — 머리글 행만 `{colors.primary}` 배경 + 흰 글자(`data-table-header`), 본문은 hairline 구분선 + 짝수 행 `{colors.surface}`(`data-table-row-even`). 값 상태는 Good·Risk 글자색으로만.
+
+**프로세스 플로우** — hairline 박스(`process-step`)를 블루 화살표로 잇는다. 시작 박스만 남색으로 채운다(`process-step-start`).
+
+**`figure-placeholder`** — 점선 테두리 + `{colors.surface}` + 원형 아이콘 + `FIG.n — … PLACEHOLDER` 캡션. 최종 납품본에는 남기지 않는다.
+
+### Slide Frame
+
+**`slide-light`** — 흰 배경, 좌우 여백 67px, 우상단 BCT 로고(color), 하단 `footer-bar`.
+
+**`slide-dark`** — 남색 배경, 흰 로고, window 모티프(사각형 두 겹), 원형 블롭 두 개. 표지·구분·클로징 전용. 표지는 오른쪽 window 안에 그 문서의 내용을 보여 주는 모션 그래픽(예: 원가 견적서는 조립 공정과 CT 바)을 둔다.
+
+## Logo
+
+### 구성
+
+위아래 블루 바 사이에 BCT 워드마크를 둔 형태다. 두 가지 형태와 세 가지 색 변형이 있다.
+
+| 형태 | 파일 | 쓰는 곳 |
+|---|---|---|
+| BCT 단독형 | `bct_logo_BCT_*` (500×201) | 웹, PPT, 장비 라벨, 해외 자료 |
+| 국문 병기형 | `bct_logo_BCT_KR_*` (500×289) | 문서 표지, 보고서, 명함, 국내 제출 서류 |
+| 마크 | `bct_mark_*` (70×70) | 파비콘, 프리젠테이션·문서 하단(푸터), 아이콘 자리 |
+
+**마크**: BCT 블루 정사각형 안에 한 변 4/7(40/70) 크기의 밝은 정사각형이 들어간 형태다. color는 `#1F4E9C` 바탕 + `#F5F5F5` 안쪽, white는 흰 바탕 + 63% 흰 안쪽. 마크는 window 모티프와 다르다 — 모티프는 테두리만 있는 장식이고, 마크는 채워진 공식 로고다.
+
+| 색 변형 | 쓰는 곳 |
+|---|---|
+| color | 흰색·밝은 배경(기본) |
+| white | BCT 블루·어두운 배경·사진 |
+| black | 흑백 인쇄, 팩스, 도장 |
+
+### Clear Space &amp; Minimum Size
+
+- **여백**: 로고 사방에 x 이상. x = BCT 글자 높이의 1/2. 파일은 바 끝에 맞춰 여백 없이 잘려 있으니 배치할 때 여백을 직접 둔다.
+- **최소 크기**: 인쇄 단독형 폭 12mm · 병기형 폭 25mm / 화면 단독형 폭 80px · 병기형 폭 160px. 병기형이 최소 크기보다 작아지면 단독형을 쓴다.
+
+### Logo Files
+
+| 파일 | 내용 |
+|---|---|
+| `logo/bct_logo_BCT_color.svg` / `_white` / `_black` | BCT 단독형 3색 |
+| `logo/bct_logo_BCT_KR_color.svg` / `_white` / `_black` | 국문 병기형 3색 |
+| `logo/bct_mark_color.svg` / `_white` | 정사각형 마크 2색 (파비콘·푸터) |
+
+원본 관리: `Brand Marketing/Logo_bct/` — `01_SVG_웹용`(SVG), `02_PNG_투명배경`(PNG 2000px), `03_인쇄용_CMYK`(PDF/X-1a, AI, EPS), `src/build_logo.py`(VectorCraft로 전체 재생성). 파일 이름 규칙은 `bct_logo_[BCT|BCT_KR]_[color|white|black]`.
+
+### 금지
+
+- 비율 늘이기·줄이기, 회전·기울이기
+- 임의 색 변경, 블루 배경 위에 color 변형
+- &quot;BCT&quot;나 &quot;(주)비씨테크&quot;를 서체로 다시 타이핑하기. 항상 로고 파일을 그대로 배치한다
+- 최초 로고(기울어진 글자형) 사용. 기존 문서·라벨에 남아 있으면 새 로고로 바꾼다
+
+## Do&#x27;s and Don&#x27;ts
+
+### Do
+- 본문 13pt 이상, 제목 26pt 이상을 지킨다
+- 영문·숫자는 Google Sans, 한글은 Gowun Batang. 섞인 문장은 글자 종류별로 나눈다
+- 앰버는 슬라이드당 1~2곳까지만 쓴다
+- 표는 hairline으로만 구획하고, 머리글만 블루 배경
+- 여백으로 구조를 표현한다(16px 단위)
+- 다크 슬라이드는 표지·구분·클로징에만 쓴다
+- 본문 슬라이드 헤더 우상단에 BCT 로고를 둔다
+
+### Don&#x27;t
+- 제목 아래 색 띠·밑줄을 긋지 않는다
+- 카드 왼쪽에 색 띠를 넣지 않는다
+- 그린 계열 강조색을 쓰지 않는다(BCT의 포인트는 앰버)
+- 영문·숫자에 Gowun Batang이나 JetBrains Mono를 쓰지 않는다
+- 카드 사이를 14px 미만으로 붙이지 않는다
+- window 모티프를 본문 슬라이드나 로고 자리에 쓰지 않고, 사각형을 세 겹 이상 겹치지 않는다
+- 로고 글자를 서체로 다시 쓰지 않는다
+
+## Responsive Behavior
+
+| Name | Width | Key Changes |
+|---|---|---|
+| Mobile | &lt; 768px | 슬라이드는 16:9 비율을 유지한 채 폭에 맞춰 축소. 긴 문서(작업절차서 등)는 1열 |
+| Tablet | 768–1023px | 카드 그리드 2열. 작업절차서는 Galaxy Tab 가로 화면 기준 |
+| Desktop | ≥ 1024px | 슬라이드 1280×720 원본 크기 |
+
+웹 슬라이드는 비율을 지키며 통째로 축소하고, 슬라이드 안 배치를 다시 짜지 않는다.
+
+## Iteration Guide
+
+1. 한 번에 컴포넌트 하나씩 고친다
+2. 본문에서는 hex·px 대신 토큰 이름(`{colors.primary}`, `{rounded.md}`, `value-tile`)으로 말한다
+3. 새 슬라이드는 위 11가지 패턴에서 먼저 고르고, 정말 다른 구조일 때만 새로 만든다
+4. 새 강조가 필요해도 색을 더하지 않는다. 블루 농도와 앰버 한 곳으로 해결한다
+5. 로고는 `Brand Marketing/Logo_bct/`의 파일만 쓰고, 고칠 때는 `src/build_logo.py`로 다시 생성한다
+6. 같은 토큰을 쓰는 BCT 문서 형식: 프리젠테이션(PPT·웹), 작업절차서(SOP), 케이블 도면, 검사성적서, 부적합(NCM) 보고서, 도면 개정 대조 보고서
+
+&gt; 출처: BCT 로고 사용 가이드 v1.0(2026-10-31, 로고·인쇄), bct-presentation 디자인 가이드 v1.0(2026-08, 색·서체·그리드·컴포넌트·마크), 표지 형식은 `cm_pricing_L3_PRIME_M2_heater.html`. 문서 형식은 getdesign.md의 DESIGN.md 구조를 따랐다.
+</pre></div>
+
+<div id="live">
+<section style="padding-top:40px">
+  <div class="eb">Key Characteristics</div>
+  <ul class="chars" style="margin-top:12px">
+    <li>흰 캔버스 + BCT 블루 단색 계열 60~70%. 남색은 표지·구분·클로징 전용</li>
+    <li>앰버가 유일한 포인트 색. 큰 숫자·핵심 라벨, 슬라이드당 1~2곳</li>
+    <li>그린 계열 강조색은 쓰지 않는다</li>
+    <li>영문 알파벳과 숫자는 항상 Google Sans, 한글은 Gowun Batang</li>
+    <li>카드·표는 hairline과 여백으로만 구획. 그림자·좌측 색 띠·제목 밑줄 없음</li>
+    <li>16:9, 좌우 여백 67px, 우상단 BCT 로고, 하단 남색 푸터 바</li>
+  </ul>
+</section>
+
+<section id="colors">
+  <div class="eb"><b>01</b> / Colors</div>
+  <h2>색</h2>
+  <p class="lead">견본을 누르면 HEX 값이 복사됩니다.</p>
+  <h3>Brand &amp; Accent</h3><div class="swatches" data-group="brand"></div>
+  <h3>Surface</h3><div class="swatches" data-group="surface"></div>
+  <h3>Text</h3><div class="swatches" data-group="text"></div>
+  <h3>Semantic</h3><div class="swatches" data-group="semantic"></div>
+  <div class="rule"><b>규칙</b> · 한 슬라이드에서 블루가 60~70%. 앰버는 슬라이드당 1~2곳. Good·Risk는 표·체크리스트 값에만.
+    <div class="ratio"><span style="flex:65;background:var(--primary)"></span><span style="flex:20;background:var(--primary-pale)"></span><span style="flex:12;background:#fff;border:1px solid var(--hairline)"></span><span style="flex:3;background:var(--amber)"></span></div></div>
+  <h3>Logo Colors</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>이름</th><th>HEX</th><th>RGB</th><th>CMYK (인쇄)</th><th>쓰는 곳</th></tr>
+    <tr><td>BCT Blue</td><td>#1F4E9C</td><td>31 78 156</td><td>C80 M50 Y0 K39 (임시)</td><td>바, BCT 워드마크</td></tr>
+    <tr><td>Ink</td><td>#1A1A1A</td><td>26 26 26</td><td>K90</td><td>(주)비씨테크</td></tr>
+    <tr><td>Black</td><td>#000000</td><td>0 0 0</td><td>K100</td><td>단색(black) 변형</td></tr>
+    <tr><td>White</td><td>#FFFFFF</td><td>255 255 255</td><td>인쇄 안 함</td><td>white 변형</td></tr>
+  </table></div>
+</section>
+
+<section id="typography">
+  <div class="eb"><b>02</b> / Typography</div>
+  <h2>서체</h2>
+  <p class="lead">영문 알파벳과 숫자는 항상 Google Sans, 한글은 Gowun Batang. 섞인 문장은 글자 종류별로 나눠 쓴다.</p>
+  <div class="fonts">
+    <div class="font-card"><div class="big" style="font-weight:700">Aa 12</div><div class="nm">Google Sans</div><div class="rl">영문·숫자 전부 — 제목, 본문, 표, 라벨, 푸터</div></div>
+    <div class="font-card"><div class="big" style="font-family:'Gowun Batang',serif;font-weight:700">가나</div><div class="nm">Gowun Batang</div><div class="rl">한글 전부</div></div>
+  </div>
+  <h3>혼합 문장</h3>
+  <div class="mixdemo">
+    <div class="row"><span class="l">예시</span><div class="t"><span class="en">Heater Module 1</span>개당 <span class="en">4</span>가닥</div></div>
+    <div class="row"><span class="l">예시</span><div class="t"><span class="en">Lot 2</span>건 출하 검사 완료</div></div>
+  </div>
+  <p style="font-size:14px;color:var(--steel);margin:8px 0 0">Google Sans로 쓰이는 부분을 블루로 표시했다. 실제 자료에서는 색을 바꾸지 않는다.</p>
+  <h3>Hierarchy — Slides (PPT / Web)</h3>
+  <div class="tbl-wrap"><table class="tbl" id="scale"><tr><th>Token</th><th>Spec</th><th>Sample</th></tr></table></div>
+  <p style="font-size:14px;color:var(--steel)">하한선: 본문 13pt, 제목 26pt 아래로 내리지 않는다. 로고 글자(Montserrat ExtraBold, Pretendard Black)는 로고 파일 안에만 있다.</p>
+</section>
+
+<section id="layout">
+  <div class="eb"><b>03</b> / Layout</div>
+  <h2>슬라이드 그리드</h2>
+  <p class="lead">16:9, PPT 13.333×7.5in / Web 1280×720px. 좌우 여백 67px(0.7in) 고정. 헤더·푸터 높이는 슬라이드 유형과 상관없이 같다.</p>
+  <div class="gd" aria-label="슬라이드 그리드 다이어그램">
+    <div class="m"></div><div class="m r"></div>
+    <div class="z" style="top:5%;height:5%">eyebrow · 02 / SECTION TAG<span style="margin-left:auto">BCT LOGO →</span></div>
+    <div class="z" style="top:11.5%;height:8%">slide title · 26pt / 32px</div>
+    <div class="z" style="top:21%;height:5%">subtitle (선택)</div>
+    <div class="z" style="top:30%;height:58%;justify-content:center">CONTENT AREA</div>
+    <div class="ft"><span>■ BCT (mark)</span><span>BCT PRESENTATION · DOC TITLE</span><span>04 / 11</span></div>
+    <span class="lbl" style="left:.4%;top:45%">67px</span><span class="lbl" style="right:.4%;top:45%">67px</span>
+  </div>
+  <h3>11가지 슬라이드 패턴</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>#</th><th>패턴</th><th>배경</th></tr>
+    <tr><td>01</td><td>표지 — 흰 로고, window 모티프(사각형 2겹), 원형 블롭 2개</td><td>남색</td></tr>
+    <tr><td>02</td><td>목차</td><td>흰색</td></tr>
+    <tr><td>03</td><td>구분 — 큰 번호 + 제목</td><td>남색</td></tr>
+    <tr><td>04</td><td>2단 + 밸류 타일</td><td>흰색</td></tr>
+    <tr><td>05</td><td>번호 목록</td><td>흰색</td></tr>
+    <tr><td>06</td><td>이중 표</td><td>흰색</td></tr>
+    <tr><td>07</td><td>프로세스 플로우</td><td>흰색</td></tr>
+    <tr><td>08</td><td>이미지 + 불릿</td><td>흰색</td></tr>
+    <tr><td>09</td><td>빅 스탯 비교</td><td>흰색</td></tr>
+    <tr><td>10</td><td>비교표</td><td>흰색</td></tr>
+    <tr><td>11</td><td>클로징 — 흰 로고</td><td>남색</td></tr>
+  </table></div>
+</section>
+
+<section id="shapes">
+  <div class="eb"><b>04</b> / Shapes &amp; Depth</div>
+  <h2>모서리와 깊이</h2>
+  <div class="radii" id="radii"></div>
+  <h3>Elevation</h3>
+  <div class="elev">
+    <div class="lv" style="background:var(--primary-deep);color:#fff"><b>0 — Flat</b><span style="color:#D5DFEF">슬라이드 배경, 밸류 타일, 다크 패널</span></div>
+    <div class="lv" style="border:1px solid var(--hairline);background:var(--surface)"><b>1 — Hairline</b>카드, 표, 프로세스 박스</div>
+    <div class="lv" style="border:1px solid var(--hairline-strong)"><b>2 — Hairline Strong</b>통계 카드, 강조 표</div>
+  </div>
+  <h3>Window Motif</h3>
+  <p class="lead" style="margin-bottom:0">사각형 두 겹으로 "하나의 창으로 본다"는 OPS Hub의 개념을 보여 주는 시그니처 장식. 표지·구분·클로징의 남색 배경에만 쓰고, 로고 자리에는 쓰지 않는다.</p>
+  <div class="windemo"><span class="win w1"></span><span class="win w2"></span><span>window-motif</span></div>
+</section>
+
+<section id="components">
+  <div class="eb"><b>05</b> / Components</div>
+  <h2>컴포넌트</h2>
+  <div class="demo-grid">
+    <div class="demo"><div class="label">eyebrow · tag</div>
+      <div class="row"><span class="eb"><b>02</b> / QUALITY</span></div>
+      <div class="row" style="margin-top:14px"><span class="tag">CM</span><span class="tag">Assembly</span><span class="tag am">Key</span></div>
+    </div>
+    <div class="demo"><div class="label">hairline-card</div>
+      <div class="hcard"><p class="t">출하 전 기본 검사</p><p>외관, 치수, 기능 항목을 체크리스트로 확인한 뒤 성적서에 기록한다.</p></div>
+    </div>
+  </div>
+  <div class="demo"><div class="label">value-tile · 1×3 · 내용은 예시</div>
+    <div class="tiles">
+      <div class="vt"><span class="n">01</span><p class="t">위탁생산</p><p>반도체 장비 부품 조립과 시험</p></div>
+      <div class="vt"><span class="n">02</span><p class="t">수리·업그레이드</p><p>반출·반입 이력과 작업 보고서</p></div>
+      <div class="vt"><span class="n">03</span><p class="t">협력사 관리</p><p>케이블 하네스·판금 수입검사</p></div>
+    </div>
+  </div>
+  <div class="demo-grid">
+    <div class="demo"><div class="label">stat-card · 수치는 예시</div>
+      <div class="stat"><span class="tag">Lead time</span><div class="num">12<small>일</small></div><dl><dt>기준</dt><dd>발주 → 출하</dd><dt>대상</dt><dd>장비 부품 모듈</dd></dl></div>
+    </div>
+    <div class="demo"><div class="label">note-box · figure-placeholder</div>
+      <div class="note"><b>Note</b> · 실제 사진이 없을 때만 플레이스홀더를 쓰고, 최종 납품본에는 남기지 않는다.</div>
+      <div class="fig" style="margin-top:14px"><i></i>FIG.1 — PRODUCT PHOTO PLACEHOLDER</div>
+    </div>
+  </div>
+  <div class="demo"><div class="label">data-table · 머리글 블루 + 짝수 행 surface · 값은 예시</div>
+    <div class="tbl-wrap"><table class="tbl">
+      <tr><th>검사 항목</th><th>기준</th><th>측정</th><th>판정</th></tr>
+      <tr><td>치수</td><td>120.0 ± 0.1 mm</td><td>120.04 mm</td><td class="good">합격</td></tr>
+      <tr><td>체결 토크</td><td>2.5 N·m ± 10%</td><td>2.6 N·m</td><td class="good">합격</td></tr>
+      <tr><td>Interlock</td><td>정상 동작</td><td>지연 0.8 s</td><td class="risk">재확인</td></tr>
+    </table></div>
+  </div>
+  <div class="demo"><div class="label">process-flow · 시작 박스만 남색</div>
+    <div class="flow">
+      <div class="st first">입고<small>사급부품 수령</small></div><div class="ar">→</div>
+      <div class="st">조립<small>SOP 기준</small></div><div class="ar">→</div>
+      <div class="st">시험<small>출하 전 검사</small></div><div class="ar">→</div>
+      <div class="st">출하<small>성적서 첨부</small></div>
+    </div>
+  </div>
+</section>
+
+<section id="slides">
+  <div class="eb"><b>06</b> / Slides</div>
+  <h2>슬라이드 예시</h2>
+  <p class="lead">본문 슬라이드는 흰 배경 + 우상단 color 로고 + 남색 푸터 바. 표지·구분·클로징은 남색 + 흰 로고 + window 모티프.</p>
+  <div class="slides2">
+    <div class="sl dk"><span class="blob b1"></span><span class="blob b2"></span><span class="win w1"></span><span class="win w2"></span>
+      <div class="ctr"><div class="k">COMPANY PROFILE · 2026</div><div class="h">반도체 장비 부품 위탁 생산 파트너</div><div class="p">반도체 장비 부품 위탁 생산 전문기업</div></div>
+      <div class="clg"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 289">
+
+<g fill="#FFFFFF"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 279H498.503C499.33 279 500 279.895 500 281V287C500 288.105 499.33 289 498.503 289H1.497C.67 289 0 288.105 0 287V281C0 279.895 .67 279 1.497 279Z"/></g>
+<g fill="#FFFFFF"><path d="M64.42 194H73Q71.307 197.23 69.719 202.09Q68.13 206.95 67.133 212.58Q66.136 218.209 66.136 223.469Q66.136 228.729 67.133 234.359Q68.13 239.988 69.719 244.864Q71.307 249.739 73 253H64.42Q60.849 246.386 58.925 239.081Q57 231.775 57 223.469Q57 215.164 58.925 207.873Q60.849 200.583 64.42 194ZM141 234.66H118.453V255H108.091V234.66H86V226.02H141ZM136.243 203.367H119.919Q120.864 207.517 125.376 210.714Q129.889 213.912 138.784 214.932L135.005 223.435Q127.022 222.483 121.662 219.524Q116.302 216.565 113.5 212.041Q110.73 216.565 105.403 219.524Q100.076 222.483 92.126 223.435L88.346 214.932Q97.111 213.912 101.607 210.731Q106.104 207.551 107.146 203.367H90.822V195H136.243ZM162.58 253H154Q155.693 249.739 157.281 244.864Q158.87 239.988 159.867 234.359Q160.864 228.729 160.864 223.469Q160.864 218.209 159.867 212.58Q158.87 206.95 157.281 202.09Q155.693 197.23 154 194H162.58Q166.151 200.583 168.075 207.873Q170 215.164 170 223.469Q170 231.775 168.075 239.081Q166.151 246.386 162.58 253ZM197.299 214.05H206.893V194H217V255H187V194H197.299ZM206.893 242.8V225.777H197.299V242.8ZM236 255H227V194H236ZM272.441 234.069Q274.198 228.469 274.784 221.766Q275.369 215.064 275.369 206.288V195H284.329V206.288Q284.329 215.019 284.812 221.413Q285.295 227.807 286.964 233.584Q288.633 239.36 292 243.417L286.32 253.383Q281.752 247.959 279.644 237.111Q277.331 248.444 272.441 254Q267.61 248.664 265.268 237.641Q263.306 247.562 259.032 252.854L253 243.417Q256.367 239.316 258.051 233.562Q259.734 227.807 260.203 221.479Q260.671 215.152 260.671 206.288V195H269.396V206.288Q269.396 214.931 270.011 221.7Q270.626 228.469 272.441 234.069ZM305 255H296V194H305ZM346.699 208.587H333.411V217.172H344.575V225.617H333.411V235.318Q337.486 235.248 341.065 234.952Q344.644 234.655 348.616 234.062L349.507 242.995Q344.575 243.868 339.884 244.095Q335.192 244.322 327.452 244.322H323V199.863H346.699ZM363 255H352.863V224.919H347.178V216.125H352.863V194H363ZM376 255H367V194H376ZM446 255H391V244.707H446ZM441.047 203.298Q441.047 210.319 440.901 215.266Q440.754 220.213 440.135 226.656Q439.516 233.098 438.18 240.878L427.754 239.681Q429.318 231.981 430.034 224.681L396.344 226.596L395.105 216.463L430.653 215.106Q430.816 210.758 430.816 205.133H397.06V195H441.047Z"/></g>
+</svg>
+</div>
+    </div>
+    <div class="sl"><div class="pad">
+      <div class="e"><b>02</b> / CAPABILITY</div><div class="lg"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 289">
+
+<g fill="#1F4E9C"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 279H498.503C499.33 279 500 279.895 500 281V287C500 288.105 499.33 289 498.503 289H1.497C.67 289 0 288.105 0 287V281C0 279.895 .67 279 1.497 279Z"/></g>
+<g fill="#1A1A1A"><path d="M64.42 194H73Q71.307 197.23 69.719 202.09Q68.13 206.95 67.133 212.58Q66.136 218.209 66.136 223.469Q66.136 228.729 67.133 234.359Q68.13 239.988 69.719 244.864Q71.307 249.739 73 253H64.42Q60.849 246.386 58.925 239.081Q57 231.775 57 223.469Q57 215.164 58.925 207.873Q60.849 200.583 64.42 194ZM141 234.66H118.453V255H108.091V234.66H86V226.02H141ZM136.243 203.367H119.919Q120.864 207.517 125.376 210.714Q129.889 213.912 138.784 214.932L135.005 223.435Q127.022 222.483 121.662 219.524Q116.302 216.565 113.5 212.041Q110.73 216.565 105.403 219.524Q100.076 222.483 92.126 223.435L88.346 214.932Q97.111 213.912 101.607 210.731Q106.104 207.551 107.146 203.367H90.822V195H136.243ZM162.58 253H154Q155.693 249.739 157.281 244.864Q158.87 239.988 159.867 234.359Q160.864 228.729 160.864 223.469Q160.864 218.209 159.867 212.58Q158.87 206.95 157.281 202.09Q155.693 197.23 154 194H162.58Q166.151 200.583 168.075 207.873Q170 215.164 170 223.469Q170 231.775 168.075 239.081Q166.151 246.386 162.58 253ZM197.299 214.05H206.893V194H217V255H187V194H197.299ZM206.893 242.8V225.777H197.299V242.8ZM236 255H227V194H236ZM272.441 234.069Q274.198 228.469 274.784 221.766Q275.369 215.064 275.369 206.288V195H284.329V206.288Q284.329 215.019 284.812 221.413Q285.295 227.807 286.964 233.584Q288.633 239.36 292 243.417L286.32 253.383Q281.752 247.959 279.644 237.111Q277.331 248.444 272.441 254Q267.61 248.664 265.268 237.641Q263.306 247.562 259.032 252.854L253 243.417Q256.367 239.316 258.051 233.562Q259.734 227.807 260.203 221.479Q260.671 215.152 260.671 206.288V195H269.396V206.288Q269.396 214.931 270.011 221.7Q270.626 228.469 272.441 234.069ZM305 255H296V194H305ZM346.699 208.587H333.411V217.172H344.575V225.617H333.411V235.318Q337.486 235.248 341.065 234.952Q344.644 234.655 348.616 234.062L349.507 242.995Q344.575 243.868 339.884 244.095Q335.192 244.322 327.452 244.322H323V199.863H346.699ZM363 255H352.863V224.919H347.178V216.125H352.863V194H363ZM376 255H367V194H376ZM446 255H391V244.707H446ZM441.047 203.298Q441.047 210.319 440.901 215.266Q440.754 220.213 440.135 226.656Q439.516 233.098 438.18 240.878L427.754 239.681Q429.318 231.981 430.034 224.681L396.344 226.596L395.105 216.463L430.653 215.106Q430.816 210.758 430.816 205.133H397.06V195H441.047Z"/></g>
+</svg>
+</div>
+      <p class="tt">세 가지 핵심 역량</p><div class="sb">조립부터 수리, 협력사 관리까지</div>
+      <div class="body"><div class="bx"><b>위탁생산</b>장비 부품 조립·시험</div><div class="bx"><b>수리</b>반출·반입 이력 관리</div><div class="bx"><b>협력사</b>수입검사·성적서</div></div>
+    </div><div class="bar"><span class="bl" style="display:flex;align-items:center;gap:.6cqw"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+
+<path fill="#FFFFFF" fill-rule="evenodd" d="M0 0H70V70H0Z M15 15V55H55V15Z"/><rect x="15" y="15" width="40" height="40" fill="#FFFFFF" fill-opacity="0.63"/>
+</svg>
+BCT</span><span>BCT PRESENTATION · COMPANY PROFILE</span><span>02 / 11</span></div></div>
+  </div>
+</section>
+
+<section id="logo">
+  <div class="eb"><b>07</b> / Logo</div>
+  <h2>로고</h2>
+  <p class="lead">위아래 블루 바 사이에 BCT 워드마크. 단독형은 웹·PPT·장비 라벨·해외 자료, 국문 병기형은 문서 표지·보고서·명함·국내 제출 서류.</p>
+  <div class="logos">
+    <div class="lgv"><div class="lw"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 201">
+
+<g fill="#1F4E9C"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 191H498.503C499.33 191 500 191.895 500 193V199C500 200.105 499.33 201 498.503 201H1.497C.67 201 0 200.105 0 199V193C0 191.895 .67 191 1.497 191Z"/></g>
+</svg>
+</div><div class="cap">bct_logo_BCT_color · 밝은 배경 (기본)</div></div>
+    <div class="lgv dk"><div class="lw"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 201">
+
+<g fill="#FFFFFF"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 191H498.503C499.33 191 500 191.895 500 193V199C500 200.105 499.33 201 498.503 201H1.497C.67 201 0 200.105 0 199V193C0 191.895 .67 191 1.497 191Z"/></g>
+</svg>
+</div><div class="cap">bct_logo_BCT_white · 블루·어두운 배경·사진</div></div>
+    <div class="lgv"><div class="lw"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 201">
+
+<g fill="#000000"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 191H498.503C499.33 191 500 191.895 500 193V199C500 200.105 499.33 201 498.503 201H1.497C.67 201 0 200.105 0 199V193C0 191.895 .67 191 1.497 191Z"/></g>
+</svg>
+</div><div class="cap">bct_logo_BCT_black · 흑백 인쇄·팩스·도장</div></div>
+    <div class="lgv"><div class="lw"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 289">
+
+<g fill="#1F4E9C"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 279H498.503C499.33 279 500 279.895 500 281V287C500 288.105 499.33 289 498.503 289H1.497C.67 289 0 288.105 0 287V281C0 279.895 .67 279 1.497 279Z"/></g>
+<g fill="#1A1A1A"><path d="M64.42 194H73Q71.307 197.23 69.719 202.09Q68.13 206.95 67.133 212.58Q66.136 218.209 66.136 223.469Q66.136 228.729 67.133 234.359Q68.13 239.988 69.719 244.864Q71.307 249.739 73 253H64.42Q60.849 246.386 58.925 239.081Q57 231.775 57 223.469Q57 215.164 58.925 207.873Q60.849 200.583 64.42 194ZM141 234.66H118.453V255H108.091V234.66H86V226.02H141ZM136.243 203.367H119.919Q120.864 207.517 125.376 210.714Q129.889 213.912 138.784 214.932L135.005 223.435Q127.022 222.483 121.662 219.524Q116.302 216.565 113.5 212.041Q110.73 216.565 105.403 219.524Q100.076 222.483 92.126 223.435L88.346 214.932Q97.111 213.912 101.607 210.731Q106.104 207.551 107.146 203.367H90.822V195H136.243ZM162.58 253H154Q155.693 249.739 157.281 244.864Q158.87 239.988 159.867 234.359Q160.864 228.729 160.864 223.469Q160.864 218.209 159.867 212.58Q158.87 206.95 157.281 202.09Q155.693 197.23 154 194H162.58Q166.151 200.583 168.075 207.873Q170 215.164 170 223.469Q170 231.775 168.075 239.081Q166.151 246.386 162.58 253ZM197.299 214.05H206.893V194H217V255H187V194H197.299ZM206.893 242.8V225.777H197.299V242.8ZM236 255H227V194H236ZM272.441 234.069Q274.198 228.469 274.784 221.766Q275.369 215.064 275.369 206.288V195H284.329V206.288Q284.329 215.019 284.812 221.413Q285.295 227.807 286.964 233.584Q288.633 239.36 292 243.417L286.32 253.383Q281.752 247.959 279.644 237.111Q277.331 248.444 272.441 254Q267.61 248.664 265.268 237.641Q263.306 247.562 259.032 252.854L253 243.417Q256.367 239.316 258.051 233.562Q259.734 227.807 260.203 221.479Q260.671 215.152 260.671 206.288V195H269.396V206.288Q269.396 214.931 270.011 221.7Q270.626 228.469 272.441 234.069ZM305 255H296V194H305ZM346.699 208.587H333.411V217.172H344.575V225.617H333.411V235.318Q337.486 235.248 341.065 234.952Q344.644 234.655 348.616 234.062L349.507 242.995Q344.575 243.868 339.884 244.095Q335.192 244.322 327.452 244.322H323V199.863H346.699ZM363 255H352.863V224.919H347.178V216.125H352.863V194H363ZM376 255H367V194H376ZM446 255H391V244.707H446ZM441.047 203.298Q441.047 210.319 440.901 215.266Q440.754 220.213 440.135 226.656Q439.516 233.098 438.18 240.878L427.754 239.681Q429.318 231.981 430.034 224.681L396.344 226.596L395.105 216.463L430.653 215.106Q430.816 210.758 430.816 205.133H397.06V195H441.047Z"/></g>
+</svg>
+</div><div class="cap">bct_logo_BCT_KR_color · 국문 병기형</div></div>
+    <div class="lgv dk"><div class="lw"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 289">
+
+<g fill="#FFFFFF"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 279H498.503C499.33 279 500 279.895 500 281V287C500 288.105 499.33 289 498.503 289H1.497C.67 289 0 288.105 0 287V281C0 279.895 .67 279 1.497 279Z"/></g>
+<g fill="#FFFFFF"><path d="M64.42 194H73Q71.307 197.23 69.719 202.09Q68.13 206.95 67.133 212.58Q66.136 218.209 66.136 223.469Q66.136 228.729 67.133 234.359Q68.13 239.988 69.719 244.864Q71.307 249.739 73 253H64.42Q60.849 246.386 58.925 239.081Q57 231.775 57 223.469Q57 215.164 58.925 207.873Q60.849 200.583 64.42 194ZM141 234.66H118.453V255H108.091V234.66H86V226.02H141ZM136.243 203.367H119.919Q120.864 207.517 125.376 210.714Q129.889 213.912 138.784 214.932L135.005 223.435Q127.022 222.483 121.662 219.524Q116.302 216.565 113.5 212.041Q110.73 216.565 105.403 219.524Q100.076 222.483 92.126 223.435L88.346 214.932Q97.111 213.912 101.607 210.731Q106.104 207.551 107.146 203.367H90.822V195H136.243ZM162.58 253H154Q155.693 249.739 157.281 244.864Q158.87 239.988 159.867 234.359Q160.864 228.729 160.864 223.469Q160.864 218.209 159.867 212.58Q158.87 206.95 157.281 202.09Q155.693 197.23 154 194H162.58Q166.151 200.583 168.075 207.873Q170 215.164 170 223.469Q170 231.775 168.075 239.081Q166.151 246.386 162.58 253ZM197.299 214.05H206.893V194H217V255H187V194H197.299ZM206.893 242.8V225.777H197.299V242.8ZM236 255H227V194H236ZM272.441 234.069Q274.198 228.469 274.784 221.766Q275.369 215.064 275.369 206.288V195H284.329V206.288Q284.329 215.019 284.812 221.413Q285.295 227.807 286.964 233.584Q288.633 239.36 292 243.417L286.32 253.383Q281.752 247.959 279.644 237.111Q277.331 248.444 272.441 254Q267.61 248.664 265.268 237.641Q263.306 247.562 259.032 252.854L253 243.417Q256.367 239.316 258.051 233.562Q259.734 227.807 260.203 221.479Q260.671 215.152 260.671 206.288V195H269.396V206.288Q269.396 214.931 270.011 221.7Q270.626 228.469 272.441 234.069ZM305 255H296V194H305ZM346.699 208.587H333.411V217.172H344.575V225.617H333.411V235.318Q337.486 235.248 341.065 234.952Q344.644 234.655 348.616 234.062L349.507 242.995Q344.575 243.868 339.884 244.095Q335.192 244.322 327.452 244.322H323V199.863H346.699ZM363 255H352.863V224.919H347.178V216.125H352.863V194H363ZM376 255H367V194H376ZM446 255H391V244.707H446ZM441.047 203.298Q441.047 210.319 440.901 215.266Q440.754 220.213 440.135 226.656Q439.516 233.098 438.18 240.878L427.754 239.681Q429.318 231.981 430.034 224.681L396.344 226.596L395.105 216.463L430.653 215.106Q430.816 210.758 430.816 205.133H397.06V195H441.047Z"/></g>
+</svg>
+</div><div class="cap">bct_logo_BCT_KR_white</div></div>
+    <div class="lgv"><div class="lw"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 289">
+
+<g fill="#000000"><path d="M1.497 0H498.503C499.33 0 500 0.895 500 2V8C500 9.105 499.33 10 498.503 10H1.497C.67 10 0 9.105 0 8V2C0 0.895 .67 0 1.497 0Z"/><path d="M58.85 163V37H123.29C139.85 37 152.21 40.06 160.37 46.18C168.53 52.18 172.61 60.1 172.61 69.94C172.61 76.42 170.87 82.12 167.39 87.04C164.03 91.84 159.23 95.68 152.99 98.56C146.87 101.32 139.55 102.7 131.03 102.7L134.63 94.06C143.51 94.06 151.25 95.44 157.85 98.2C164.45 100.84 169.55 104.74 173.15 109.9C176.87 114.94 178.73 121.12 178.73 128.44C178.73 139.36 174.29 147.88 165.41 154C156.65 160 143.81 163 126.89 163H58.85ZM94.13 137.26H124.01C130.13 137.26 134.75 136.24 137.87 134.2C141.11 132.04 142.73 128.8 142.73 124.48C142.73 120.16 141.11 116.98 137.87 114.94C134.75 112.78 130.13 111.7 124.01 111.7H91.61V87.04H118.61C124.61 87.04 129.11 86.02 132.11 83.98C135.11 81.94 136.61 78.88 136.61 74.8C136.61 70.72 135.11 67.72 132.11 65.8C129.11 63.76 124.61 62.74 118.61 62.74H94.13V137.26ZM260.01 165.52C250.05 165.52 240.81 163.96 232.29 160.84C223.89 157.6 216.57 153.04 210.33 147.16C204.21 141.28 199.41 134.38 195.93 126.46C192.45 118.42 190.71 109.6 190.71 100C190.71 90.4 192.45 81.64 195.93 73.72C199.41 65.68 204.21 58.72 210.33 52.84C216.57 46.96 223.89 42.46 232.29 39.34C240.81 36.1 250.05 34.48 260.01 34.48C271.65 34.48 282.03 36.52 291.15 40.6C300.39 44.68 308.07 50.56 314.19 58.24L291.51 78.76C287.43 73.96 282.93 70.3 278.01 67.78C273.21 65.26 267.81 64 261.81 64C256.65 64 251.91 64.84 247.59 66.52C243.27 68.2 239.55 70.66 236.43 73.9C233.43 77.02 231.03 80.8 229.23 85.24C227.55 89.68 226.71 94.6 226.71 100C226.71 105.4 227.55 110.32 229.23 114.76C231.03 119.2 233.43 123.04 236.43 126.28C239.55 129.4 243.27 131.8 247.59 133.48C251.91 135.16 256.65 136 261.81 136C267.81 136 273.21 134.74 278.01 132.22C282.93 129.7 287.43 126.04 291.51 121.24L314.19 141.76C308.07 149.32 300.39 155.2 291.15 159.4C282.03 163.48 271.65 165.52 260.01 165.52ZM371.912 163V65.26H333.212V37H446.072V65.26H407.552V163H371.912Z"/><path d="M1.497 279H498.503C499.33 279 500 279.895 500 281V287C500 288.105 499.33 289 498.503 289H1.497C.67 289 0 288.105 0 287V281C0 279.895 .67 279 1.497 279Z"/></g>
+<g fill="#000000"><path d="M64.42 194H73Q71.307 197.23 69.719 202.09Q68.13 206.95 67.133 212.58Q66.136 218.209 66.136 223.469Q66.136 228.729 67.133 234.359Q68.13 239.988 69.719 244.864Q71.307 249.739 73 253H64.42Q60.849 246.386 58.925 239.081Q57 231.775 57 223.469Q57 215.164 58.925 207.873Q60.849 200.583 64.42 194ZM141 234.66H118.453V255H108.091V234.66H86V226.02H141ZM136.243 203.367H119.919Q120.864 207.517 125.376 210.714Q129.889 213.912 138.784 214.932L135.005 223.435Q127.022 222.483 121.662 219.524Q116.302 216.565 113.5 212.041Q110.73 216.565 105.403 219.524Q100.076 222.483 92.126 223.435L88.346 214.932Q97.111 213.912 101.607 210.731Q106.104 207.551 107.146 203.367H90.822V195H136.243ZM162.58 253H154Q155.693 249.739 157.281 244.864Q158.87 239.988 159.867 234.359Q160.864 228.729 160.864 223.469Q160.864 218.209 159.867 212.58Q158.87 206.95 157.281 202.09Q155.693 197.23 154 194H162.58Q166.151 200.583 168.075 207.873Q170 215.164 170 223.469Q170 231.775 168.075 239.081Q166.151 246.386 162.58 253ZM197.299 214.05H206.893V194H217V255H187V194H197.299ZM206.893 242.8V225.777H197.299V242.8ZM236 255H227V194H236ZM272.441 234.069Q274.198 228.469 274.784 221.766Q275.369 215.064 275.369 206.288V195H284.329V206.288Q284.329 215.019 284.812 221.413Q285.295 227.807 286.964 233.584Q288.633 239.36 292 243.417L286.32 253.383Q281.752 247.959 279.644 237.111Q277.331 248.444 272.441 254Q267.61 248.664 265.268 237.641Q263.306 247.562 259.032 252.854L253 243.417Q256.367 239.316 258.051 233.562Q259.734 227.807 260.203 221.479Q260.671 215.152 260.671 206.288V195H269.396V206.288Q269.396 214.931 270.011 221.7Q270.626 228.469 272.441 234.069ZM305 255H296V194H305ZM346.699 208.587H333.411V217.172H344.575V225.617H333.411V235.318Q337.486 235.248 341.065 234.952Q344.644 234.655 348.616 234.062L349.507 242.995Q344.575 243.868 339.884 244.095Q335.192 244.322 327.452 244.322H323V199.863H346.699ZM363 255H352.863V224.919H347.178V216.125H352.863V194H363ZM376 255H367V194H376ZM446 255H391V244.707H446ZM441.047 203.298Q441.047 210.319 440.901 215.266Q440.754 220.213 440.135 226.656Q439.516 233.098 438.18 240.878L427.754 239.681Q429.318 231.981 430.034 224.681L396.344 226.596L395.105 216.463L430.653 215.106Q430.816 210.758 430.816 205.133H397.06V195H441.047Z"/></g>
+</svg>
+</div><div class="cap">bct_logo_BCT_KR_black</div></div>
+    <div class="lgv"><div class="lw"><span style="width:84px;display:block"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+
+<rect width="70" height="70" fill="#1F4E9C"/><rect x="15" y="15" width="40" height="40" fill="#F5F5F5"/>
+</svg>
+</span><span style="width:32px;display:block;margin-left:22px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+
+<rect width="70" height="70" fill="#1F4E9C"/><rect x="15" y="15" width="40" height="40" fill="#F5F5F5"/>
+</svg>
+</span><span style="width:16px;display:block;margin-left:16px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+
+<rect width="70" height="70" fill="#1F4E9C"/><rect x="15" y="15" width="40" height="40" fill="#F5F5F5"/>
+</svg>
+</span></div><div class="cap">bct_mark_color · 파비콘, 프리젠테이션·문서 하단</div></div>
+    <div class="lgv dk"><div class="lw"><span style="width:84px;display:block"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+
+<path fill="#FFFFFF" fill-rule="evenodd" d="M0 0H70V70H0Z M15 15V55H55V15Z"/><rect x="15" y="15" width="40" height="40" fill="#FFFFFF" fill-opacity="0.63"/>
+</svg>
+</span><span style="width:32px;display:block;margin-left:22px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+
+<path fill="#FFFFFF" fill-rule="evenodd" d="M0 0H70V70H0Z M15 15V55H55V15Z"/><rect x="15" y="15" width="40" height="40" fill="#FFFFFF" fill-opacity="0.63"/>
+</svg>
+</span><span style="width:16px;display:block;margin-left:16px"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70">
+
+<path fill="#FFFFFF" fill-rule="evenodd" d="M0 0H70V70H0Z M15 15V55H55V15Z"/><rect x="15" y="15" width="40" height="40" fill="#FFFFFF" fill-opacity="0.63"/>
+</svg>
+</span></div><div class="cap">bct_mark_white · 남색 푸터 바·다크 슬라이드</div></div>
+  </div>
+  <h3>Clear Space · Minimum Size · Don't</h3>
+  <div class="tbl-wrap"><table class="tbl">
+    <tr><th>항목</th><th>규칙</th></tr>
+    <tr><td>여백</td><td>사방에 x 이상 (x = BCT 글자 높이의 1/2). 파일은 바 끝에 맞춰 잘려 있으니 여백을 직접 둔다</td></tr>
+    <tr><td>최소 크기 · 인쇄</td><td>단독형 폭 12mm · 병기형 폭 25mm</td></tr>
+    <tr><td>최소 크기 · 화면</td><td>단독형 폭 80px · 병기형 폭 160px. 병기형이 더 작아지면 단독형</td></tr>
+    <tr><td>금지</td><td>비율 변형, 회전·기울이기, 임의 색, 블루 배경 위 color 변형, "BCT"·"(주)비씨테크" 다시 타이핑, 최초 로고(기울어진 글자형)</td></tr>
+  </table></div>
+  <p style="font-size:14px;color:var(--steel)">원본: Brand Marketing/Logo_bct — 01_SVG_웹용 · 02_PNG_투명배경 · 03_인쇄용_CMYK · src/build_logo.py</p>
+</section>
+
+<section id="rules">
+  <div class="eb"><b>08</b> / Do's &amp; Don'ts</div>
+  <h2>지킬 것과 피할 것</h2>
+  <div class="dosdonts">
+    <div class="dd do"><p class="h4">DO</p><ul>
+      <li>본문 13pt 이상, 제목 26pt 이상</li>
+      <li>영문·숫자 Google Sans, 한글 Gowun Batang</li>
+      <li>앰버는 슬라이드당 1~2곳까지만</li>
+      <li>표는 hairline으로만, 머리글만 블루 배경</li>
+      <li>여백으로 구조 표현 (16px 단위)</li>
+      <li>다크 슬라이드는 표지·구분·클로징에만</li>
+      <li>본문 슬라이드 우상단에 BCT 로고</li>
+    </ul></div>
+    <div class="dd dont"><p class="h4">DON'T</p><ul>
+      <li>제목 아래 색 띠·밑줄</li>
+      <li>카드 왼쪽 색 띠</li>
+      <li>그린 계열 강조색</li>
+      <li>영문·숫자에 Gowun Batang·JetBrains Mono</li>
+      <li>카드 간격 14px 미만</li>
+      <li>window 모티프를 본문 슬라이드·로고 자리에</li>
+      <li>로고 글자를 서체로 다시 쓰기</li>
+    </ul></div>
+  </div>
+</section>
+</div>
+<footer><span>BCT Design System v1.0 · ㈜비씨테크</span><span>Source · DESIGN.md · Logo Guide v1.0 + Presentation Guide v1.0</span></footer>
+</main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const C={
+ brand:[["BCT Blue","primary","#1F4E9C","본문 강조, 표 머리글, eyebrow 번호, 로고"],["BCT Blue Deep","primary-deep","#153B78","표지·구분·클로징, 밸류 타일, 푸터 바"],["BCT Blue Deeper","primary-deeper","#0F2C5C","표지 블롭 두 번째 겹"],["Amber","amber","#C98A2B","유일한 포인트 색 · 슬라이드당 1~2곳"]],
+ surface:[["Canvas","canvas","#FFFFFF","기본 배경"],["Surface","surface","#F6F9FD","카드, 표 짝수 행"],["Blue Pale","primary-pale","#EAF1FC","태그·배지"],["Blue Pale 2","primary-pale-2","#F4F8FE","Note 박스"],["Hairline","hairline","#E2E8F3","구분선·카드 테두리"],["Hairline Strong","hairline-strong","#CBD8ED","표·통계 카드 테두리"]],
+ text:[["Ink","ink","#0B1220","제목·본문"],["Steel","steel","#5B6472","보조 설명"],["Steel Soft","steel-soft","#8A93A3","캡션, 페이지 태그"],["On Primary","on-primary","#FFFFFF","블루·남색 위 글자"]],
+ semantic:[["Good","good","#1F8A5F","표의 긍정 값"],["Good Pale","good-pale","#E4F3EA","긍정 값 바탕"],["Risk","risk","#C1443C","위험·주의 값 · 남용 금지"],["Risk Pale","risk-pale","#FBE7E5","위험 값 바탕"],["Amber Pale","amber-pale","#FBE8D3","앰버 라벨 바탕"]]
+};
+const toast=document.getElementById('toast');let tt;
+function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),1400)}
+async function copy(t){try{await navigator.clipboard.writeText(t);say(t+(document.documentElement.lang==='en'?' copied':' 복사됨'))}catch(e){say(t)}}
+document.querySelectorAll('.swatches').forEach(el=>C[el.dataset.group].forEach(([n,t,h,u])=>{
+  const b=document.createElement('button');b.type='button';b.className='sw';b.setAttribute('aria-label',n+' '+h+' 복사');
+  b.innerHTML=`<div class="swc" style="background:${h}"></div><div class="info"><div class="name">${n}</div><div class="tok">{colors.${t}} · ${h}</div><div class="use">${u}</div></div>`;
+  b.onclick=()=>copy(h);el.appendChild(b)}));
+const T=[["cover-title","40pt / 44px · 700",44,700,1.15,"0","반도체 장비 부품 위탁 생산 파트너"],["section-title","32pt / 40px · 700",40,700,1.2,"0","02 품질 관리"],["slide-title","26pt / 32px · 700",32,700,1.25,"0","세 가지 핵심 역량"],["slide-subtitle","13pt / 16px · 400",16,400,1.5,"0","조립부터 수리, 협력사 관리까지"],["eyebrow","11pt / 13px · 700 · 0.12em",13,700,1.2,".12em","02 / CAPABILITY"],["card-title","15pt / 18px · 700",18,700,1.35,"0","출하 전 기본 검사"],["body","13.5pt / 16px · 400",16,400,1.6,"0","Lot 2건의 외관과 치수를 확인했다."],["table-header","12.5pt / 14px · 600",14,600,1.3,"0","검사 항목"],["table","12.5pt / 14px · 400",14,400,1.45,"0","Flatness 0.02 mm"],["stat-number","52pt / 60px · 700",60,700,1,"-1px","12일"],["footer","9pt / 12px · 500",12,500,1,".06em","BCT PRESENTATION · 04 / 11"]];
+const sc=document.getElementById('scale');T.forEach(([n,s,sz,w,lh,ls,txt])=>{const tr=document.createElement('tr');tr.innerHTML=`<td><code>${n}</code></td><td class="spec">${s}</td><td><div style="font-size:${sz}px;font-weight:${w};line-height:${lh};letter-spacing:${ls};${n==='eyebrow'?'text-transform:uppercase;':''}">${txt}</div></td>`;sc.appendChild(tr)});
+const R=[["none","0px","슬라이드, window 모티프"],["sm","9px","Note, 프로세스 박스"],["md","14px","카드, 밸류 타일"],["lg","18px","통계 카드"],["pill","999px","태그·배지"]];
+const rd=document.getElementById('radii');R.forEach(([n,v,u])=>{const d=document.createElement('div');d.className='radius';d.innerHTML=`<div class="box" style="border-radius:${v}"></div><code>{rounded.${n}}</code><div style="margin-top:6px">${v} · ${u}</div>`;rd.appendChild(d)});
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));document.body.classList.toggle('show-source',b.dataset.view==='source')});
+const links=[...document.querySelectorAll('nav.side a')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-40% 0px -55% 0px'});
+document.querySelectorAll('#overview, main section[id]').forEach(s=>io.observe(s));
+</script>
+<div class="lang-toggle" role="group" aria-label="Language"><button type="button" data-lang="ko" aria-pressed="true">KO</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+<script>
+(function(){
+  var D={"섹션": "Sections", "BCT 로고 (주)비씨테크": "BCT logo with Korean company name", "슬라이드 그리드 다이어그램": "Slide grid diagram", "BCT 디자인 시스템": "BCT Design System", "흰 캔버스 + BCT 블루 단색 계열 60~70%. 남색은 표지·구분·클로징 전용": "White canvas + BCT Blue family at 60–70%. Navy only for cover, divider and closing", "앰버가 유일한 포인트 색. 큰 숫자·핵심 라벨, 슬라이드당 1~2곳": "Amber is the only accent: big numbers and key labels, 1–2 per slide", "그린 계열 강조색은 쓰지 않는다": "No green accent colors", "영문 알파벳과 숫자는 항상 Google Sans, 한글은 Gowun Batang": "Latin letters and digits always in Google Sans; Hangul in Gowun Batang", "카드·표는 hairline과 여백으로만 구획. 그림자·좌측 색 띠·제목 밑줄 없음": "Cards and tables are divided by hairlines and white space only — no shadows, side stripes or title underlines", "16:9, 좌우 여백 67px, 우상단 BCT 로고, 하단 남색 푸터 바": "16:9, 67px side margins, BCT logo top right, navy footer bar", "색": "Colors", "견본을 누르면 HEX 값이 복사됩니다.": "Click a swatch to copy its HEX value.", "본문 강조, 표 머리글, eyebrow 번호, 로고": "Emphasis, table headers, eyebrow numbers, logo", "표지·구분·클로징, 밸류 타일, 푸터 바": "Cover, divider & closing slides, value tiles, footer bar", "표지 블롭 두 번째 겹": "Second layer of the cover blobs", "유일한 포인트 색 · 슬라이드당 1~2곳": "Only accent · 1–2 per slide", "기본 배경": "Default background", "카드, 표 짝수 행": "Cards, even table rows", "태그·배지": "Tags, badges", "Note 박스": "Note box", "구분선·카드 테두리": "Dividers, card borders", "표·통계 카드 테두리": "Table and stat-card borders", "제목·본문": "Titles and body", "보조 설명": "Secondary text", "캡션, 페이지 태그": "Captions, page tags", "블루·남색 위 글자": "Text on blue and navy", "표의 긍정 값": "Positive values in tables", "긍정 값 바탕": "Background for positive values", "위험·주의 값 · 남용 금지": "Risk / caution values · use sparingly", "위험 값 바탕": "Background for risk values", "앰버 라벨 바탕": "Background for amber labels", "규칙": "Rule", "· 한 슬라이드에서 블루가 60~70%. 앰버는 슬라이드당 1~2곳. Good·Risk는 표·체크리스트 값에만.": "· Blue covers 60–70% of a slide. Amber 1–2 times per slide. Good and Risk only for table and checklist values.", "이름": "Name", "CMYK (인쇄)": "CMYK (print)", "쓰는 곳": "Used for", "C80 M50 Y0 K39 (임시)": "C80 M50 Y0 K39 (provisional)", "바, BCT 워드마크": "Bars, BCT wordmark", "(주)비씨테크": "(주)비씨테크 (Korean name)", "단색(black) 변형": "One-color (black) version", "인쇄 안 함": "Not printed", "white 변형": "White version", "서체": "Typography", "영문 알파벳과 숫자는 항상 Google Sans, 한글은 Gowun Batang. 섞인 문장은 글자 종류별로 나눠 쓴다.": "Latin letters and digits always in Google Sans, Hangul in Gowun Batang. Mixed sentences are split by script.", "영문·숫자 전부 — 제목, 본문, 표, 라벨, 푸터": "All Latin & digits — titles, body, tables, labels, footer", "가나": "가나", "한글 전부": "All Hangul", "혼합 문장": "Mixed sentences", "예시": "Example", "개당": "개당", "가닥": "가닥", "Google Sans로 쓰이는 부분을 블루로 표시했다. 실제 자료에서는 색을 바꾸지 않는다.": "These Korean samples mark the Google Sans parts in blue. Real materials keep the text color unchanged.", "02 품질 관리": "02 Quality Management", "세 가지 핵심 역량": "Three core capabilities", "조립부터 수리, 협력사 관리까지": "From assembly to repair and supplier management", "출하 전 기본 검사": "Pre-shipment inspection", "검사 항목": "Inspection item", "12일": "12 days", "하한선: 본문 13pt, 제목 26pt 아래로 내리지 않는다. 로고 글자(Montserrat ExtraBold, Pretendard Black)는 로고 파일 안에만 있다.": "Floor: never below 13pt body or 26pt titles. Logo lettering (Montserrat ExtraBold, Pretendard Black) exists only inside the logo files.", "슬라이드 그리드": "Slide Grid", "16:9, PPT 13.333×7.5in / Web 1280×720px. 좌우 여백 67px(0.7in) 고정. 헤더·푸터 높이는 슬라이드 유형과 상관없이 같다.": "16:9, PPT 13.333×7.5in / Web 1280×720px. Fixed 67px (0.7in) side margins. Header and footer heights are the same on every slide type.", "subtitle (선택)": "subtitle (optional)", "11가지 슬라이드 패턴": "11 Slide Patterns", "패턴": "Pattern", "배경": "Background", "표지 — 흰 로고, window 모티프, 원형 블롭 2겹": "Cover — white logo, two-square window motif, two round blobs", "남색": "Navy", "목차": "Contents", "흰색": "White", "구분 — 큰 번호 + 제목": "Divider — big number + title", "2단 + 밸류 타일": "Two columns + value tiles", "번호 목록": "Numbered list", "이중 표": "Double table", "프로세스 플로우": "Process flow", "이미지 + 불릿": "Image + bullets", "빅 스탯 비교": "Big-stat comparison", "비교표": "Comparison table", "클로징 — 흰 로고": "Closing — white logo", "모서리와 깊이": "Shapes & Depth", "0px · 슬라이드, window 모티프": "0px · slides, window motif", "9px · Note, 프로세스 박스": "9px · note, process boxes", "14px · 카드, 밸류 타일": "14px · cards, value tiles", "18px · 통계 카드": "18px · stat cards", "999px · 태그·배지": "999px · tags, badges", "슬라이드 배경, 밸류 타일, 다크 패널": "Slide backgrounds, value tiles, dark panels", "카드, 표, 프로세스 박스": "Cards, tables, process boxes", "통계 카드, 강조 표": "Stat cards, emphasized tables", "중첩 사각형으로 \"하나의 창으로 본다\"는 OPS Hub의 개념을 보여 주는 시그니처 장식. 표지·구분·클로징의 남색 배경에만 쓰고, 로고 자리에는 쓰지 않는다.": "Two nested squares express the OPS Hub idea of \"seeing everything through one window\". Used only on navy cover, divider and closing slides — never in place of the logo.", "컴포넌트": "Components", "value-tile · 1×3 · 내용은 예시": "value-tile · 1×3 · sample content", "위탁생산": "Contract manufacturing", "수리·업그레이드": "Repair & upgrades", "반출·반입 이력과 작업 보고서": "Ship-out / return history and work reports", "협력사 관리": "Supplier management", "케이블 하네스·판금 수입검사": "Incoming inspection of cable harnesses and sheet metal", "stat-card · 수치는 예시": "stat-card · sample figures", "일": "days", "기준": "Basis", "발주 → 출하": "PO → shipment", "대상": "Product", "· 실제 사진이 없을 때만 플레이스홀더를 쓰고, 최종 납품본에는 남기지 않는다.": "· Use a placeholder only when no real photo exists, and never leave one in the final deliverable.", "data-table · 머리글 블루 + 짝수 행 surface · 값은 예시": "data-table · blue header + surface even rows · sample values", "측정": "Measured", "판정": "Result", "합격": "Pass", "정상 동작": "Works normally", "지연 0.8 s": "0.8 s delay", "재확인": "Recheck", "process-flow · 시작 박스만 남색": "process-flow · only the first box is navy", "입고": "Receiving", "사급부품 수령": "Customer-supplied parts", "조립": "Assembly", "SOP 기준": "Per SOP", "시험": "Test", "출하 전 검사": "Pre-shipment inspection", "출하": "Shipment", "성적서 첨부": "With test report", "슬라이드 예시": "Slides", "본문 슬라이드는 흰 배경 + 우상단 color 로고 + 남색 푸터 바. 표지·구분·클로징은 남색 + 흰 로고 + window 모티프.": "Content slides: white background + color logo top right + navy footer bar. Cover, divider and closing: navy + white logo + window motif.", "수리": "Repair", "반출·반입 이력 관리": "Ship-out / return tracking", "협력사": "Suppliers", "수입검사·성적서": "Incoming inspection & reports", "로고": "Logo", "위아래 블루 바 사이에 BCT 워드마크. 단독형은 웹·PPT·장비 라벨·해외 자료, 국문 병기형은 문서 표지·보고서·명함·국내 제출 서류.": "The BCT wordmark between two blue bars. The standalone form is for web, PPT, equipment labels and overseas materials; the form with the Korean company name is for document covers, reports, business cards and domestic filings.", "bct_logo_BCT_color · 밝은 배경 (기본)": "bct_logo_BCT_color · light backgrounds (default)", "bct_logo_BCT_white · 블루·어두운 배경·사진": "bct_logo_BCT_white · blue, dark backgrounds, photos", "bct_logo_BCT_black · 흑백 인쇄·팩스·도장": "bct_logo_BCT_black · black & white print, fax, stamps", "bct_logo_BCT_KR_color · 국문 병기형": "bct_logo_BCT_KR_color · with Korean company name", "항목": "Item", "여백": "Clear space", "사방에 x 이상 (x = BCT 글자 높이의 1/2). 파일은 바 끝에 맞춰 잘려 있으니 여백을 직접 둔다": "At least x on every side (x = half the BCT letter height). Files are cropped at the bar ends, so add the space yourself", "최소 크기 · 인쇄": "Minimum size · print", "단독형 폭 12mm · 병기형 폭 25mm": "Standalone 12mm wide · Korean-name form 25mm wide", "최소 크기 · 화면": "Minimum size · screen", "단독형 폭 80px · 병기형 폭 160px. 병기형이 더 작아지면 단독형": "Standalone 80px wide · Korean-name form 160px wide. Below that, use the standalone form", "금지": "Don't", "비율 변형, 회전·기울이기, 임의 색, 블루 배경 위 color 변형, \"BCT\"·\"(주)비씨테크\" 다시 타이핑, 최초 로고(기울어진 글자형)": "Distort, rotate or skew, recolor, place the color version on blue, retype \"BCT\" or \"(주)비씨테크\", or use the original slanted logo", "원본: Brand Marketing/Logo_bct — 01_SVG_웹용 · 02_PNG_투명배경 · 03_인쇄용_CMYK · src/build_logo.py": "Source: Brand Marketing/Logo_bct — 01_SVG (web) · 02_PNG (transparent) · 03_CMYK (print) · src/build_logo.py", "지킬 것과 피할 것": "Do's & Don'ts", "본문 13pt 이상, 제목 26pt 이상": "Body 13pt+, titles 26pt+", "영문·숫자 Google Sans, 한글 Gowun Batang": "Latin & digits in Google Sans, Hangul in Gowun Batang", "앰버는 슬라이드당 1~2곳까지만": "Amber 1–2 times per slide at most", "표는 hairline으로만, 머리글만 블루 배경": "Tables use hairlines only; only the header row is blue", "여백으로 구조 표현 (16px 단위)": "Express structure with white space (16px steps)", "다크 슬라이드는 표지·구분·클로징에만": "Dark slides only for cover, divider and closing", "본문 슬라이드 우상단에 BCT 로고": "BCT logo top right on content slides", "제목 아래 색 띠·밑줄": "Color bars or underlines under titles", "카드 왼쪽 색 띠": "Color stripes on card edges", "그린 계열 강조색": "Green accent colors", "영문·숫자에 Gowun Batang·JetBrains Mono": "Gowun Batang or JetBrains Mono for Latin & digits", "카드 간격 14px 미만": "Card gaps under 14px", "window 모티프를 본문 슬라이드·로고 자리에": "The window motif on content slides or in place of the logo", "로고 글자를 서체로 다시 쓰기": "Retyping the logo lettering in a font", "BCT Design System v1.0 · ㈜비씨테크": "BCT Design System v1.0 · BCT Co., Ltd.", "반도체 장비 부품 위탁 생산 전문기업 ㈜비씨테크의 색, 서체, 그리드, 컴포넌트, 로고 규칙. 흰 캔버스 위 BCT 블루 단색, 표지·구분·클로징만 남색, 포인트는 앰버 하나.": "Colors, typography, grid, components and logo rules for BCT Co., Ltd., a contract manufacturer of semiconductor equipment parts. BCT Blue on a white canvas, navy only for cover, divider and closing slides, and amber as the single accent.", "외관, 치수, 기능 항목을 체크리스트로 확인한 뒤 성적서에 기록한다.": "Check appearance, dimensions and function against the checklist, then record them in the test report.", "반도체 장비 부품 조립과 시험": "Assembly and testing of semiconductor equipment parts", "건 출하 검사 완료": "건 출하 검사 완료", "장비 부품 모듈": "Equipment part module", "치수": "Dimensions", "체결 토크": "Fastening torque", "반도체 장비 부품 위탁 생산 파트너": "Your semiconductor equipment parts manufacturing partner", "반도체 장비 부품 위탁 생산 전문기업": "Contract manufacturer of semiconductor equipment parts", "장비 부품 조립·시험": "Equipment parts assembly & test", "Lot 2건의 외관과 치수를 확인했다.": "Appearance and dimensions checked on two lots.", "BRAND DESIGN SYSTEM · PRESENTATION · DOCUMENT": "BRAND DESIGN SYSTEM · PRESENTATION · DOCUMENT", "두 겹의 window 안에서 BCT 슬라이드 한 장이 그리드, 제목, 카드, 푸터 순으로 조립되고 색 토큰이 채워진다": "Inside a two-square window, a BCT slide assembles — grid, title, cards, footer — and the color tokens fill in", "BCT · (주)비씨테크": "BCT · BCT Co., Ltd.", "색 토큰 · 4개 그룹": "Color tokens · 4 groups", "슬라이드 패턴": "Slide patterns", "본문 최소 크기": "Minimum body size", "bct_mark_color · 파비콘, 프리젠테이션·문서 하단": "bct_mark_color · favicon, presentation & document footers", "bct_mark_white · 남색 푸터 바·다크 슬라이드": "bct_mark_white · navy footer bar, dark slides", "사각형 두 겹으로 \"하나의 창으로 본다\"는 OPS Hub의 개념을 보여 주는 시그니처 장식. 표지·구분·클로징의 남색 배경에만 쓰고, 로고 자리에는 쓰지 않는다.": "Two nested squares express the OPS Hub idea of \"seeing everything through one window\". Used only on navy cover, divider and closing slides — never in place of the logo.", "표지 — 흰 로고, window 모티프(사각형 2겹), 원형 블롭 2개": "Cover — white logo, two-square window motif, two round blobs"}, HANGUL=/[\uAC00-\uD7A3]/, reg=[], attrs=[], missing=new Set();
+  function tr(k){if(Object.prototype.hasOwnProperty.call(D,k))return D[k];
+    var m=k.match(/^(.*) \uBCF5\uC0AC$/); if(m&&!HANGUL.test(m[1]))return 'Copy '+m[1];
+    return null}
+  var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+    var p=n.parentElement; if(!p||p.closest('#source,script,style,.lang-toggle'))return NodeFilter.FILTER_REJECT;
+    return HANGUL.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});
+  while(w.nextNode()){var n=w.currentNode,k=n.nodeValue.trim(),e=tr(k);
+    if(e===null){missing.add(k);continue}
+    reg.push([n,n.nodeValue,n.nodeValue.replace(k,e)])}
+  document.querySelectorAll('[aria-label],[title]').forEach(function(el){
+    ['aria-label','title'].forEach(function(a){var v=el.getAttribute(a);if(!v||!HANGUL.test(v))return;
+      var e=tr(v.trim());if(e===null){missing.add(v.trim());return}attrs.push([el,a,v,e])})});
+  var titleKo=document.title, titleEn=tr(titleKo)||titleKo;
+  window.__i18nMissing=Array.from(missing);
+  function set(lang){
+    reg.forEach(function(r){r[0].nodeValue=lang==='en'?r[2]:r[1]});
+    attrs.forEach(function(r){r[0].setAttribute(r[1],lang==='en'?r[3]:r[2])});
+    document.documentElement.lang=lang; document.title=lang==='en'?titleEn:titleKo;
+    document.querySelectorAll('.lang-toggle button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.lang===lang))});
+    try{localStorage.setItem('ds-lang',lang)}catch(e){}
+  }
+  document.querySelectorAll('.lang-toggle button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.lang)})});
+  var q=(location.search.match(/[?&]lang=(ko|en)/)||[])[1], saved=null;
+  try{saved=localStorage.getItem('ds-lang')}catch(e){}
+  set(q||saved||'ko');
+})();
+</script>
+</body>
+</html>
